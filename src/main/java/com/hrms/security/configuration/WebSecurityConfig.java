@@ -30,6 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/dish/picture").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/pwd").permitAll()
                 .antMatchers("/root").hasAuthority("root")
                 .antMatchers("/ROOT").hasRole("ROOT")
                 .anyRequest().authenticated()

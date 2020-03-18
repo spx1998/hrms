@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserController {
+public class SecurityController {
     private Gson g = new Gson();
     @Autowired
     UserDao userDao;
