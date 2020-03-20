@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.security.dao.RoleModuleDao">
+
+    <resultMap type="com.hrms.security.entity.RoleModule" id="RoleModuleMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+        <result property="moduleId" column="module_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getModulesByRole" resultType="java.lang.Integer">
+        select module_id
+        from role_module
+        where role_id = #{roleId}
+    </select>
+
+</mapper>

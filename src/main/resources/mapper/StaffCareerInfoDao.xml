@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.user.dao.StaffCareerInfoDao">
+
+    <resultMap type="com.hrms.user.entity.StaffCareerInfo" id="StaffCareerInfoMap">
+        <result property="staffId" column="staff_id" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="hireDate" column="hire_date" jdbcType="OTHER"/>
+        <result property="grade" column="grade" jdbcType="VARCHAR"/>
+        <result property="departmentId" column="department_id" jdbcType="VARCHAR"/>
+        <result property="seniority" column="seniority" jdbcType="INTEGER"/>
+    </resultMap>
+
+</mapper>

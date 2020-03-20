@@ -1,0 +1,45 @@
+package com.hrms.security.entity;
+
+import java.io.Serializable;
+
+/**
+ * (Modules)实体类
+ *
+ * @author makejava
+ * @since 2020-03-20 14:38:11
+ */
+public class Module implements Serializable {
+    private static final long serialVersionUID = 444003876386556729L;
+    
+    private Integer moduleId;
+    
+    private String name;
+    
+    private String url;
+
+
+    public Integer getModuleId() {
+        return moduleId;
+    }
+
+    public void setModuleId(Integer moduleId) {
+        this.moduleId = moduleId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+}
