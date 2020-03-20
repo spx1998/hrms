@@ -24,15 +24,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        //TODO:hasAuthority和hasRole的区别
         http
                 .authorizeRequests()
 //                .antMatchers("/dish/picture").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/pwd").permitAll()
-                .antMatchers("/root").hasAuthority("root")
-                .antMatchers("/ROOT").hasRole("ROOT")
+                .antMatchers("/pwd/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf()

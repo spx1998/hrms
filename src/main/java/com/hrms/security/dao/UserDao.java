@@ -1,6 +1,6 @@
 package com.hrms.security.dao;
 
-import com.hrms.security.domain.User;
+import com.hrms.security.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.hrms.security.utils;
 
-import com.hrms.security.domain.User;
+import com.hrms.security.entity.User;
 import com.hrms.security.service.TokenDetail;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -97,7 +97,7 @@ public class TokenUtils {
         int roleID;
         try {
             final Claims claims = this.getClaimsFromToken(token);
-            roleID = (int)claims.get("id");
+            roleID = (int)claims.get("role");
         } catch (Exception e) {
             roleID = 0;
         }

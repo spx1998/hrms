@@ -2,20 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hrms.security.dao.UserDao">
-    <resultMap id="User" type="com.hrms.security.domain.User">
+    <resultMap id="User" type="com.hrms.security.entity.User">
         <id column="staff_id" property="staffID"/>
         <result column="username" property="username"/>
         <result column="role_id" property="roleID"/>
         <result column="password" property="password"/>
     </resultMap>
     <select id="IDLogin" resultMap="User">
-        select * from login_info where staff_id=#{param1} and password=#{param2};
+        select *
+        from login_info
+        where staff_id = #{param1}
+          and password = #{param2};
     </select>
     <select id="usernameLogin" resultMap="User">
-        select * from login_info where username=#{param1} and password=#{param2};
+        select *
+        from login_info
+        where username = #{param1}
+          and password = #{param2};
     </select>
     <select id="getUserByUsername" resultMap="User">
-        select * from login_info where username=#{username}
+        select *
+        from login_info
+        where username = #{username}
     </select>
 
 </mapper>

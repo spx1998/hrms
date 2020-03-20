@@ -1,4 +1,4 @@
-package com.hrms.security.domain;
+package com.hrms.security.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,7 +1,7 @@
 package com.hrms.security.service;
 
 import com.hrms.security.dao.UserDao;
-import com.hrms.security.domain.User;
+import com.hrms.security.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
