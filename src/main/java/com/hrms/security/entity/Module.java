@@ -11,14 +11,14 @@ import java.io.Serializable;
 public class Module implements Serializable {
     private static final long serialVersionUID = 444003876386556729L;
     
-    private Integer moduleId;
+    private int moduleId;
     
     private String name;
     
     private String url;
 
 
-    public Integer getModuleId() {
+    public int getModuleId() {
         return moduleId;
     }
 
