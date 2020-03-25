@@ -1,16 +1,15 @@
 package com.hrms.security.controller;
 
 import com.google.gson.Gson;
+import com.hrms.common.Utils.CAPTCHAUtils;
+import com.hrms.common.Utils.EmailUtils;
 import com.hrms.common.domain.CONTANTS;
 import com.hrms.common.domain.Msg;
+import com.hrms.security.dao.LoginInfoDao;
 import com.hrms.security.dao.ModulesDao;
 import com.hrms.security.dao.RoleModuleDao;
 import com.hrms.security.dao.SubmodulesDao;
-import com.hrms.security.dao.UserDao;
-import com.hrms.security.entity.Mod_Submods;
-import com.hrms.security.entity.Module;
-import com.hrms.security.entity.Submodule;
-import com.hrms.security.entity.User;
+import com.hrms.security.entity.*;
 import com.hrms.security.service.TokenDetail;
 import com.hrms.security.service.TokenDetailImpl;
 import com.hrms.security.utils.TokenUtils;
@@ -24,7 +23,7 @@ import java.util.List;
 public class SecurityController {
     private Gson gson = new Gson();
     @Autowired
-    UserDao userDao;
+    LoginInfoDao loginInfoDao;
     @Autowired
     ModulesDao modulesDao;
     @Autowired
@@ -33,6 +32,10 @@ public class SecurityController {
     SubmodulesDao submodulesDao;
     @Autowired
     TokenUtils tokenUtils;
+    @Autowired
+    CAPTCHAUtils captchaUtils;
+    @Autowired
+    EmailUtils emailUtils;
 
     /**
      * 用户登录
@@ -45,10 +48,10 @@ public class SecurityController {
     public String login(@RequestParam("account") String account, @RequestParam("password") String password) {
         Msg msg = new Msg();
         try {
-            User user;
-            if ((user = userDao.IDLogin(account, password)) != null || (user = userDao.usernameLogin(account, password)) != null) {
+            LoginInfo loginInfo;
+            if ((loginInfo = loginInfoDao.IDLogin(account, password)) != null || (loginInfo = loginInfoDao.usernameLogin(account, password)) != null) {
                 //todo: 生成token 并与角色ID一起返回；
-                TokenDetail tokenDetail = new TokenDetailImpl(user.getStaffID(), user.getUsername(), user.getRoleID());
+                TokenDetail tokenDetail = new TokenDetailImpl(loginInfo.getStaffID(), loginInfo.getUsername(), loginInfo.getRoleID());
                 msg.setStatus(CONTANTS.STATUS_SUCCESS);
                 msg.setContent(tokenUtils.generateToken(tokenDetail));
             } else {
@@ -106,7 +109,7 @@ public class SecurityController {
                         modSubmods.add(submodule);
                     }
                 }
-                mod_submodsList.add(new Mod_Submods(module.getName(),modSubmods));
+                mod_submodsList.add(new Mod_Submods(module.getName(),module.getIcon(),modSubmods));
                 modSubmods = new ArrayList<>();
             }
             msg.setStatus(CONTANTS.STATUS_SUCCESS);
@@ -117,5 +120,71 @@ public class SecurityController {
             msg.setContent("");
         }
         return gson.toJson(msg);
+    }
+
+    /**
+     * 邮箱验证
+     *
+     * @return
+     */
+    @PostMapping("/pwd/email")
+    public String emailCheck(@RequestParam("email") String email) {
+        Msg msg = new Msg();
+        try {
+            if (emailUtils.sendCAPTCHA(email)) {
+                msg.setStatus(CONTANTS.STATUS_SUCCESS);
+                msg.setContent("验证信息发送成功");
+            } else {
+                msg.setStatus(CONTANTS.STATUS_WRONG);
+                msg.setContent("验证失败，可能是错误的邮箱");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg.setStatus(CONTANTS.STATUS_ERROR);
+            msg.setContent("发送失败，稍后再试");
+        }
+        return gson.toJson(msg);
+    }
+
+    /**
+     * 忘记密码时，修改密码
+     *
+     * @return
+     */
+    //TODO: 后续应使用线程池或消息队列。
+    @PostMapping("/pwd/forget")
+    public String forgetPwd(@RequestBody String forgetInfoStr) {
+        Msg msg = new Msg();
+        msg.setStatus(CONTANTS.STATUS_WRONG);
+        try {
+            ForgetInfo forgetInfo = gson.fromJson(forgetInfoStr,ForgetInfo.class);
+            if(forgetInfo.getEmail().equals(loginInfoDao.getEmailByStaffId(forgetInfo.getStaffId()))){
+                if(captchaUtils.cheackCAPTCHA(forgetInfo.getEmail(),forgetInfo.getCAPTCHA())){
+                    if(loginInfoDao.changePwd(forgetInfo.getStaffId(),forgetInfo.getUsername(),forgetInfo.getNewPwd())){
+                        msg.setStatus(CONTANTS.STATUS_SUCCESS);
+                        msg.setContent("修改成功");
+                    }else {
+                        msg.setContent("用户名或职工号不正确。");
+                    }
+                }else {
+                    msg.setContent("验证码错误。");
+                }
+            }else {
+                msg.setContent("邮箱与职工号不匹配。");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            msg.setStatus("error");
+            msg.setContent("修改失败，稍后再试。");
+        }
+        return gson.toJson(msg);
+    }
+
+    /**
+     *用户主动修改密码
+     */
+    @PostMapping("/pwd/change")
+    public String changePwd(){
+        return null;
     }
 }

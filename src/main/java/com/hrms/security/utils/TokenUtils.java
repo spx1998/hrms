@@ -1,6 +1,6 @@
 package com.hrms.security.utils;
 
-import com.hrms.security.entity.User;
+import com.hrms.security.entity.LoginInfo;
 import com.hrms.security.service.TokenDetail;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -103,6 +103,19 @@ public class TokenUtils {
         }
         return roleID;
     }
+    /**
+     * 从token中获取职工号
+     */
+    public String getStaffIdFromToken(String token) {
+        String staffId;
+        try {
+            final Claims claims = this.getClaimsFromToken(token);
+            staffId = (String) claims.get("id");
+        } catch (Exception e) {
+            staffId = null;
+        }
+        return staffId;
+    }
 
     /**
      * 解析 token 的主体 Claims
@@ -130,10 +143,10 @@ public class TokenUtils {
      * @return
      */
     public Boolean validateToken(String token, UserDetails userDetails) {
-        User user = (User) userDetails;
+        LoginInfo loginInfo = (LoginInfo) userDetails;
         final String username = this.getUsernameFromToken(token);
         final Date created = this.getCreatedDateFromToken(token);
-        return (username.equals(user.getUsername()) && !(this.isTokenExpired(token)) );
+        return (username.equals(loginInfo.getUsername()) && !(this.isTokenExpired(token)) );
     }
 
     /**

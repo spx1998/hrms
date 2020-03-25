@@ -1,4 +1,4 @@
-package com.hrms.user.entity;
+package com.hrms.security.entity;
 
 import java.io.Serializable;
 

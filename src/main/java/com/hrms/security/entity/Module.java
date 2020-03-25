@@ -10,19 +10,29 @@ import java.io.Serializable;
  */
 public class Module implements Serializable {
     private static final long serialVersionUID = 444003876386556729L;
-    
+
     private int moduleId;
-    
+
     private String name;
-    
+
     private String url;
 
+    private String icon;
+
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
     public int getModuleId() {
         return moduleId;
     }
 
-    public void setModuleId(Integer moduleId) {
+    public void setModuleId(int moduleId) {
         this.moduleId = moduleId;
     }
 

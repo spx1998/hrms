@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class User implements UserDetails {
+public class LoginInfo implements UserDetails {
 
     private static final long serialVersionUID = -3122231437787650117L;
     private String staffID;

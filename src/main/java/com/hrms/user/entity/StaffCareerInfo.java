@@ -1,21 +1,25 @@
 package com.hrms.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
+import java.sql.Date;
 
 /**
  * (StaffCareerInfo)实体类
  *
  * @author makejava
- * @since 2020-03-19 11:27:40
+ * @since 2020-03-25 15:33:34
  */
 public class StaffCareerInfo implements Serializable {
-    private static final long serialVersionUID = -78362625985835915L;
+    private static final long serialVersionUID = 732687066701309078L;
     
     private String staffId;
     
     private String name;
-    
-    private Object hireDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date hireDate;
     
     private String grade;
     
@@ -24,6 +28,15 @@ public class StaffCareerInfo implements Serializable {
     * 工龄 需要有函数修改 还有签约日期 到期时间 工资 工资卡号 备注等属性
     */
     private Integer seniority;
+
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+
+    private Date contractStart;
+    
+    private Integer contractLength;
+
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date contractEnd;
 
 
     public String getStaffId() {
@@ -42,11 +55,11 @@ public class StaffCareerInfo implements Serializable {
         this.name = name;
     }
 
-    public Object getHireDate() {
+    public Date getHireDate() {
         return hireDate;
     }
 
-    public void setHireDate(Object hireDate) {
+    public void setHireDate(Date hireDate) {
         this.hireDate = hireDate;
     }
 
@@ -72,6 +85,30 @@ public class StaffCareerInfo implements Serializable {
 
     public void setSeniority(Integer seniority) {
         this.seniority = seniority;
+    }
+
+    public Date getContractStart() {
+        return contractStart;
+    }
+
+    public void setContractStart(Date contractStart) {
+        this.contractStart = contractStart;
+    }
+
+    public Integer getContractLength() {
+        return contractLength;
+    }
+
+    public void setContractLength(Integer contractLength) {
+        this.contractLength = contractLength;
+    }
+
+    public Date getContractEnd() {
+        return contractEnd;
+    }
+
+    public void setContractEnd(Date contractEnd) {
+        this.contractEnd = contractEnd;
     }
 
 }

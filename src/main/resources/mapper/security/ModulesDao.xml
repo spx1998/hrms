@@ -6,6 +6,7 @@
         <result property="moduleId" column="module_id" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="getModules" resultMap="ModulesMap" parameterType="java.util.List">
         select *

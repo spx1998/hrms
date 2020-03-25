@@ -7,10 +7,20 @@ public class Mod_Submods implements Serializable {
 
     private static final long serialVersionUID = -7383320235153886031L;
     private String modName;
+    private String icon;
     private List<Submodule> submodName;
 
-    public Mod_Submods(String name, List<Submodule> modSubmods) {
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public Mod_Submods(String name, String icon, List<Submodule> modSubmods) {
         this.modName = name;
+        this.icon = icon;
         this.submodName = modSubmods;
     }
 

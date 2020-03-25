@@ -1,6 +1,9 @@
 package com.hrms.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
+import java.sql.Date;
 
 /**
  * (StaffBaseInfo)实体类
@@ -20,8 +23,9 @@ public class StaffBaseInfo implements Serializable {
     private String name;
     
     private String sex;
-    
-    private Object birthday;
+
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date birthday;
     
     private String phoneNumber;
     
@@ -29,19 +33,13 @@ public class StaffBaseInfo implements Serializable {
     /**
     * 创建时间
     */
-    private Object createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date createDate;
     /**
     * 创建人
     */
     private String createBy;
-    /**
-    * 最后修改日期
-    */
-    private Object updateTime;
-    /**
-    * 最后修改人
-    */
-    private String updateBy;
+
 
 
     public String getStaffId() {
@@ -68,11 +66,11 @@ public class StaffBaseInfo implements Serializable {
         this.sex = sex;
     }
 
-    public Object getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Object birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
@@ -92,12 +90,12 @@ public class StaffBaseInfo implements Serializable {
         this.email = email;
     }
 
-    public Object getCreateTime() {
-        return createTime;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreateTime(Object createTime) {
-        this.createTime = createTime;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public String getCreateBy() {
@@ -106,22 +104,6 @@ public class StaffBaseInfo implements Serializable {
 
     public void setCreateBy(String createBy) {
         this.createBy = createBy;
-    }
-
-    public Object getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Object updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
     }
 
 }

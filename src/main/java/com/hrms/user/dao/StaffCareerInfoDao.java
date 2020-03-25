@@ -1,5 +1,6 @@
 package com.hrms.user.dao;
 
+import com.hrms.user.entity.StaffCareerInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -8,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface StaffCareerInfoDao {
 
 
+    StaffCareerInfo getCareerInfoById(String staffId);
 }

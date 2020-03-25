@@ -1,5 +1,6 @@
 package com.hrms.user.dao;
 
+import com.hrms.user.entity.StaffBaseInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -7,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StaffBaseInfoDao {
 
-    String getEmailByStaffId(String staffId);
+    StaffBaseInfo getBaseInfoById(String staffId);
 }
