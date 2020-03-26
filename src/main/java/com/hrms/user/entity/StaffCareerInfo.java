@@ -24,6 +24,7 @@ public class StaffCareerInfo implements Serializable {
     private String grade;
     
     private String departmentId;
+    private String departmentName;
     /**
     * 工龄 需要有函数修改 还有签约日期 到期时间 工资 工资卡号 备注等属性
     */
@@ -77,6 +78,14 @@ public class StaffCareerInfo implements Serializable {
 
     public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public Integer getSeniority() {

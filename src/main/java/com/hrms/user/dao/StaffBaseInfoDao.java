@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface StaffBaseInfoDao {
 
     StaffBaseInfo getBaseInfoById(String staffId);
+
+    boolean updateInfoByStaffId(String staffId, String email, String phoneNumber);
 }

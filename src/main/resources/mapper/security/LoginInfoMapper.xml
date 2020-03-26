@@ -31,6 +31,12 @@
         where staff_id = #{param1}
           and username = #{param2};
     </update>
+    <update id="updatePwd">
+        update login_info
+        set password=#{param3}
+        where staff_id = #{param1}
+          and password = #{param2};
+    </update>
     <select id="getEmailByStaffId" resultType="java.lang.String">
         select email
         from login_info

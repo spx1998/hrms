@@ -1,6 +1,8 @@
 package com.hrms.security.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hrms.common.Utils.CAPTCHAUtils;
 import com.hrms.common.Utils.EmailUtils;
 import com.hrms.common.domain.CONTANTS;
@@ -184,7 +186,25 @@ public class SecurityController {
      *用户主动修改密码
      */
     @PostMapping("/pwd/change")
-    public String changePwd(){
-        return null;
+    public String changePwd(@RequestHeader("token") String token, @RequestBody String jsonStr){
+        Msg msg = new Msg();
+        try {
+            String staffId = tokenUtils.getStaffIdFromToken(token);
+            JsonObject jsonObject = new JsonParser().parse(jsonStr).getAsJsonObject();
+            String newPwd = jsonObject.get("newPwd").getAsString();
+            String oldPwd = jsonObject.get("oldPwd").getAsString();
+            if(loginInfoDao.updatePwd(staffId,oldPwd,newPwd)){
+                msg.setStatus(CONTANTS.STATUS_SUCCESS);
+                msg.setContent("修改成功。");
+            }else {
+                msg.setStatus(CONTANTS.STATUS_WRONG);
+                msg.setContent("旧密码错误。");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            msg.setStatus(CONTANTS.STATUS_ERROR);
+            msg.setContent("修改失败，稍后再试。");
+        }
+        return gson.toJson(msg);
     }
 }

@@ -17,4 +17,6 @@ public interface LoginInfoDao {
     boolean changePwd(String staffId, String username, String newPwd);
 
     String getEmailByStaffId(String staffId);
+
+    boolean updatePwd(String staffId, String oldPwd, String newPwd);
 }
