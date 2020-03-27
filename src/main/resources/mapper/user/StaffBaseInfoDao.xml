@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.user.dao.StaffBaseInfoDao">
+
+    <resultMap type="com.hrms.user.entity.StaffBaseInfo" id="StaffBaseInfoMap">
+        <result property="staffId" column="staff_id" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="birthday" column="birthday"/>
+        <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date"/>
+    </resultMap>
+    <update id="updateInfoByStaffId">
+        update staff_base_info
+        set email=#{param2},
+            phone_number=#{param3},
+            address = #{param4}
+        where staff_id = #{param1};
+    </update>
+
+
+    <select id="getBaseInfoById" resultMap="StaffBaseInfoMap">
+        select *
+        from staff_base_info
+        where staff_id = #{staffId};
+    </select>
+
+
+</mapper>

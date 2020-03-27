@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.personnel.dao.PersonnelDepartmentDao">
+
+    <resultMap type="com.hrms.personnel.entity.Department" id="DepartmentMap">
+        <result property="departmentId" column="department_id" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="ministerId" column="minister_id" jdbcType="VARCHAR"/>
+        <result property="ministerName" column="minister_name" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getDepartmentList" resultMap="DepartmentMap">
+        select *
+        from department;
+    </select>
+    <select id="getDepartmentById" resultMap="DepartmentMap">
+        select *
+        from department
+        where department_id = #{departmentId};
+    </select>
+
+</mapper>

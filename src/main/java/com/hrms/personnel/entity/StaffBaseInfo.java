@@ -1,18 +1,16 @@
-package com.hrms.user.entity;
+package com.hrms.personnel.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serializable;
 import java.sql.Date;
+import java.io.Serializable;
 
 /**
  * (StaffBaseInfo)实体类
  *
  * @author makejava
- * @since 2020-03-19 11:28:08
+ * @since 2020-03-27 11:35:10
  */
 public class StaffBaseInfo implements Serializable {
-    private static final long serialVersionUID = 983508606054897061L;
+    private static final long serialVersionUID = 515654589618565726L;
     /**
     * 员工编号
     */
@@ -21,10 +19,11 @@ public class StaffBaseInfo implements Serializable {
     * 员工姓名
     */
     private String name;
+    /**
+    * 0男性；1女性
+    */
+    private Integer sex;
     
-    private String sex;
-
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date birthday;
     
     private String phoneNumber;
@@ -32,16 +31,24 @@ public class StaffBaseInfo implements Serializable {
     private String email;
 
     private String address;
-    /**
-    * 创建时间
-    */
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
-    private Date createDate;
+
     /**
     * 创建人
     */
     private String createBy;
+    /**
+    * 创建日期
+    */
+    private Date createDate;
 
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
 
     public String getStaffId() {
@@ -60,11 +67,11 @@ public class StaffBaseInfo implements Serializable {
         this.name = name;
     }
 
-    public String getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 
@@ -92,12 +99,12 @@ public class StaffBaseInfo implements Serializable {
         this.email = email;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCreateBy() {
+        return createBy;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
     public Date getCreateDate() {
@@ -106,14 +113,6 @@ public class StaffBaseInfo implements Serializable {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
-    }
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
     }
 
 }

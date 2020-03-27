@@ -3,7 +3,6 @@ package com.hrms.user.controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 import com.hrms.common.Utils.EmailUtils;
 import com.hrms.common.domain.CONTANTS;
 import com.hrms.common.domain.Msg;
@@ -13,7 +12,6 @@ import com.hrms.user.dao.StaffBaseInfoDao;
 import com.hrms.user.dao.StaffCareerInfoDao;
 import com.hrms.user.entity.StaffBaseInfo;
 import com.hrms.user.entity.StaffCareerInfo;
-import jdk.nashorn.internal.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,7 +80,8 @@ public class UserController {
             String staffId = infoJson.get("staffId").getAsString();
             String email = infoJson.get("email").getAsString();
             String phoneNumber = infoJson.get("phoneNumber").getAsString();
-            if(staffBaseInfoDao.updateInfoByStaffId(staffId,email,phoneNumber)){
+            String address = infoJson.get("address").getAsString();
+            if(staffBaseInfoDao.updateInfoByStaffId(staffId,email,phoneNumber,address)){
                 msg.setStatus(CONTANTS.STATUS_SUCCESS);
             }else {
                 msg.setStatus(CONTANTS.STATUS_WRONG);
