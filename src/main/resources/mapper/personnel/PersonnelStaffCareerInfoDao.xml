@@ -15,12 +15,18 @@
     </resultMap>
     <select id="getStaffList" resultMap="StaffCareerInfoMap">
         select *
-        from staff_career_info;
+        from staff_career_info
+        where status = 'enable';
     </select>
     <select id="getStaffById" resultMap="StaffCareerInfoMap">
         select *
         from staff_career_info
         where staff_id = #{staffId}
+    </select>
+    <select id="getPendingList" resultMap="StaffCareerInfoMap">
+        select *
+        from staff_career_info
+        where status = 'create'
     </select>
 
 </mapper>

@@ -9,9 +9,7 @@ import com.hrms.personnel.dao.PersonnelStaffBaseInfoDao;
 import com.hrms.personnel.dao.PersonnelStaffCareerInfoDao;
 import com.hrms.personnel.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,17 +41,12 @@ public class PersonnelController {
             List<StaffListInfo> staffListInfos = new ArrayList<>();
             List<StaffBaseInfo> staffBaseInfos = personnelStaffBaseInfoDao.getStaffList();
             List<StaffCareerInfo> staffCareerInfos = personnelStaffCareerInfoDao.getStaffList();
-            List<Department> departments = personnelDepartmentDao.getDepartmentList();
-            HashMap<String,StaffBaseInfo> staffBaseInfoHashMap = new HashMap<>();
-            HashMap<String,String> departmentHashMap = new HashMap<>();
-            for(StaffBaseInfo staffBaseInfo:staffBaseInfos){
-                staffBaseInfoHashMap.put(staffBaseInfo.getStaffId(),staffBaseInfo);
+            HashMap<String, StaffBaseInfo> staffBaseInfoHashMap = new HashMap<>();
+            for (StaffBaseInfo staffBaseInfo : staffBaseInfos) {
+                staffBaseInfoHashMap.put(staffBaseInfo.getStaffId(), staffBaseInfo);
             }
-            for(Department department:departments){
-                departmentHashMap.put(department.getDepartmentId(),department.getName());
-            }
-            for(StaffCareerInfo staffCareerInfo:staffCareerInfos){
-                staffListInfos.add(new StaffListInfo(staffCareerInfo,staffBaseInfoHashMap.get(staffCareerInfo.getStaffId()),departmentHashMap.get(staffCareerInfo.getDepartmentId())));
+            for (StaffCareerInfo staffCareerInfo : staffCareerInfos) {
+                staffListInfos.add(new StaffListInfo(staffCareerInfo, staffBaseInfoHashMap.get(staffCareerInfo.getStaffId())));
             }
             msg.setStatus(CONTANTS.STATUS_SUCCESS);
             msg.setContent(gson.toJson(staffListInfos));
@@ -71,14 +64,14 @@ public class PersonnelController {
     @GetMapping("/staff/info")
     public String getStaffInfo(@RequestParam("staffId") String staffId) {
         Msg msg = new Msg();
-        try{
+        try {
             StaffBaseInfo staffBaseInfo = personnelStaffBaseInfoDao.getStaffById(staffId);
             StaffCareerInfo staffCareerInfo = personnelStaffCareerInfoDao.getStaffById(staffId);
             Department department = personnelDepartmentDao.getDepartmentById(staffCareerInfo.getDepartmentId());
-            StaffDetailInfo staffDetailInfo = new StaffDetailInfo(staffBaseInfo,staffCareerInfo,department);
+            StaffDetailInfo staffDetailInfo = new StaffDetailInfo(staffBaseInfo, staffCareerInfo, department);
             msg.setStatus(CONTANTS.STATUS_SUCCESS);
             msg.setContent(gson.toJson(staffDetailInfo));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             msg.setStatus(CONTANTS.STATUS_ERROR);
         }
@@ -89,12 +82,55 @@ public class PersonnelController {
      * 获取部门列表
      */
     @GetMapping("/staff/department/list")
-    public String getDepartmentList(){
+    public String getDepartmentList() {
         Msg msg = new Msg();
         try {
             List<Department> departments = personnelDepartmentDao.getDepartmentList();
             msg.setStatus(CONTANTS.STATUS_SUCCESS);
             msg.setContent(gson.toJson(departments));
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg.setStatus(CONTANTS.STATUS_ERROR);
+        }
+        return gson.toJson(msg);
+    }
+
+    /**
+     * 获取待入职职员列表
+     */
+    @GetMapping("/staff/pending/list")
+    public String getPendingList() {
+        Msg msg = new Msg();
+        try {
+            List<PendingListInfo> pendingListInfos = new ArrayList<>();
+            List<StaffBaseInfo> staffBaseInfos = personnelStaffBaseInfoDao.getPendingList();
+            List<StaffCareerInfo> staffCareerInfos = personnelStaffCareerInfoDao.getPendingList();
+            HashMap<String, StaffBaseInfo> staffBaseInfoHashMap = new HashMap<>();
+            for (StaffBaseInfo staffBaseInfo : staffBaseInfos) {
+                staffBaseInfoHashMap.put(staffBaseInfo.getStaffId(), staffBaseInfo);
+            }
+            for (StaffCareerInfo staffCareerInfo : staffCareerInfos) {
+                pendingListInfos.add(new PendingListInfo(staffCareerInfo, staffBaseInfoHashMap.get(staffCareerInfo.getStaffId())));
+            }
+            msg.setStatus(CONTANTS.STATUS_SUCCESS);
+            msg.setContent(gson.toJson(pendingListInfos));
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg.setStatus(CONTANTS.STATUS_ERROR);
+        }
+        return gson.toJson(msg);
+    }
+
+    /**
+     * 新建职员信息
+     */
+    @PostMapping("/staff/create")
+    public String createStaffInfo(@RequestBody String jsonStr){
+        Msg msg = new Msg();
+        try {
+
+            //TODO:事务管理
+            msg.setStatus(CONTANTS.STATUS_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
             msg.setStatus(CONTANTS.STATUS_ERROR);

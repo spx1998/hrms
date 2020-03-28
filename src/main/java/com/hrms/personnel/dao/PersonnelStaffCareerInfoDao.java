@@ -20,4 +20,6 @@ public interface PersonnelStaffCareerInfoDao {
     List<StaffCareerInfo> getStaffList();
 
     StaffCareerInfo getStaffById(String staffId);
+
+    List<StaffCareerInfo> getPendingList();
 }

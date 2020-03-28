@@ -1,9 +1,10 @@
 package com.hrms.personnel.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
-public class StaffListInfo implements Serializable {
-    private static final long serialVersionUID = -7576364508793482954L;
+public class PendingListInfo implements Serializable {
+    private static final long serialVersionUID = -6444424118740973093L;
     /**
      * 员工编号
      */
@@ -17,23 +18,19 @@ public class StaffListInfo implements Serializable {
 
     private String departmentName;
 
-    private String grade;
+    private Date hireDate;
 
     private String phoneNumber;
 
     private String email;
 
-
-    public StaffListInfo(StaffCareerInfo staffCareerInfo, StaffBaseInfo staffBaseInfo) {
+    public PendingListInfo(StaffCareerInfo staffCareerInfo, StaffBaseInfo staffBaseInfo) {
         this.staffId = staffCareerInfo.getStaffId();
         this.name = staffCareerInfo.getName();
         this.departmentId = staffCareerInfo.getDepartmentId();
-        this.grade = staffCareerInfo.getGrade();
+        this.hireDate = staffCareerInfo.getHireDate();
         this.phoneNumber = staffBaseInfo.getPhoneNumber();
         this.email = staffBaseInfo.getEmail();
-    }
-
-    public StaffListInfo() {
     }
 
     public String getStaffId() {
@@ -68,12 +65,12 @@ public class StaffListInfo implements Serializable {
         this.departmentName = departmentName;
     }
 
-    public String getGrade() {
-        return grade;
+    public Date getHireDate() {
+        return hireDate;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setHireDate(Date hireDate) {
+        this.hireDate = hireDate;
     }
 
     public String getPhoneNumber() {
