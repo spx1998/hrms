@@ -1,7 +1,4 @@
-package com.hrms.personnel.entity;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
+package com.hrms.sysmanage.entity;
 
 import java.sql.Date;
 import java.io.Serializable;
@@ -10,30 +7,30 @@ import java.io.Serializable;
  * (StaffCareerInfo)实体类
  *
  * @author makejava
- * @since 2020-03-27 11:35:15
+ * @since 2020-03-31 20:36:43
  */
 public class StaffCareerInfo implements Serializable {
-    private static final long serialVersionUID = 515881444826694374L;
-
+    private static final long serialVersionUID = 356138889725240590L;
+    
     private String staffId;
-
+    
     private String name;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date hireDate;
-
-    private String grade;
-
+    
     private String departmentId;
-    /**
-     * 工龄 需要有函数修改 还有签约日期 到期时间 工资 工资卡号 备注等属性
-     */
+    
+    private Date hireDate;
+    
+    private String grade;
+    
     private Integer seniority;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    
     private Date contractStart;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    
     private Integer contractLength;
-
+    
     private Date contractEnd;
+    
+    private String status;
 
 
     public String getStaffId() {
@@ -52,6 +49,14 @@ public class StaffCareerInfo implements Serializable {
         this.name = name;
     }
 
+    public String getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
+    }
+
     public Date getHireDate() {
         return hireDate;
     }
@@ -66,14 +71,6 @@ public class StaffCareerInfo implements Serializable {
 
     public void setGrade(String grade) {
         this.grade = grade;
-    }
-
-    public String getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
     }
 
     public Integer getSeniority() {
@@ -106,6 +103,14 @@ public class StaffCareerInfo implements Serializable {
 
     public void setContractEnd(Date contractEnd) {
         this.contractEnd = contractEnd;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

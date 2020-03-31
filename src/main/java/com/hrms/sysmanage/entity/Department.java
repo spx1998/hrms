@@ -1,26 +1,45 @@
-package com.hrms.personnel.entity;
+package com.hrms.sysmanage.entity;
 
-import java.sql.Date;
 import java.io.Serializable;
 
 /**
  * (Department)实体类
  *
  * @author makejava
- * @since 2020-03-27 11:34:41
+ * @since 2020-03-31 17:29:14
  */
 public class Department implements Serializable {
-    private static final long serialVersionUID = -55966221248568051L;
+    private static final long serialVersionUID = 978384298034662114L;
+    
     private String departmentId;
-
+    
     private String name;
-
+    
     private String ministerId;
-
+    
     private String ministerName;
-
+    
     private String hrId;
 
+    private String hrName;
+
+    private Integer number;
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public String getHrName() {
+        return hrName;
+    }
+
+    public void setHrName(String hrName) {
+        this.hrName = hrName;
+    }
 
     public String getDepartmentId() {
         return departmentId;

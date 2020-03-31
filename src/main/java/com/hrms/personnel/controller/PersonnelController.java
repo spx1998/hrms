@@ -1,6 +1,9 @@
 package com.hrms.personnel.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hrms.common.domain.CONTANTS;
 import com.hrms.common.domain.Msg;
 import com.hrms.personnel.dao.PersonnelDepartmentDao;
@@ -8,6 +11,7 @@ import com.hrms.personnel.dao.PersonnelLoginInfoDao;
 import com.hrms.personnel.dao.PersonnelStaffBaseInfoDao;
 import com.hrms.personnel.dao.PersonnelStaffCareerInfoDao;
 import com.hrms.personnel.entity.*;
+import com.hrms.personnel.service.PersonnelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +33,12 @@ public class PersonnelController {
     @Autowired
     PersonnelLoginInfoDao personnelLoginInfoDao;
 
-    private Gson gson = new Gson();
+
+    @Autowired
+    PersonnelService personnelService;
+    private Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd")
+            .create();
 
     /**
      * 获取职员列表
@@ -125,11 +134,30 @@ public class PersonnelController {
      * 新建职员信息
      */
     @PostMapping("/staff/create")
-    public String createStaffInfo(@RequestBody String jsonStr){
+    public String createStaffInfo(@RequestBody String jsonStr) {
         Msg msg = new Msg();
         try {
-
+            StaffCreateInfo staffCreateInfo = gson.fromJson(jsonStr, StaffCreateInfo.class);
             //TODO:事务管理
+            personnelService.generateStaffInfos(staffCreateInfo);
+            msg.setStatus(CONTANTS.STATUS_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg.setStatus(CONTANTS.STATUS_ERROR);
+        }
+        return gson.toJson(msg);
+    }
+
+    /**
+     *
+     */
+    @PostMapping("/staff/pending/del")
+    public String deletePendingStaff(@RequestBody String jsonStr){
+        Msg msg = new Msg();
+        try {
+            JsonObject jsonObject = new JsonParser().parse(jsonStr).getAsJsonObject();
+            String staffId = jsonObject.get("staffId").getAsString();
+            personnelService.deletePendingStaff(staffId);
             msg.setStatus(CONTANTS.STATUS_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();

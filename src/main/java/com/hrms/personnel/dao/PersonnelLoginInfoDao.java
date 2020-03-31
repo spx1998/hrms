@@ -1,11 +1,8 @@
 package com.hrms.personnel.dao;
 
-import com.hrms.personnel.entity.LoginInfo;
+import com.hrms.personnel.entity.StaffCreateInfo;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * (LoginInfo)表数据库访问层
@@ -17,4 +14,7 @@ import java.util.List;
 @Mapper
 public interface PersonnelLoginInfoDao {
 
+    void createLoginInfo(StaffCreateInfo staffCreateInfo, String username, int roleId);
+
+    void deleteStaffInfo(String staffId);
 }

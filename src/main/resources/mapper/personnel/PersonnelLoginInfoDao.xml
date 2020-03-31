@@ -9,5 +9,14 @@
         <result property="roleId" column="role_id" jdbcType="INTEGER"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
     </resultMap>
+    <insert id="createLoginInfo">
+        insert into login_info(staff_id, username, role_id, email)
+        values (#{param1.staffId}, #{param2}, #{param3}, #{param1.email});
+    </insert>
+    <delete id="deleteStaffInfo">
+        delete
+        from login_info
+        where staff_id = #{staffId}
+    </delete>
 
 </mapper>

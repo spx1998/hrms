@@ -1,11 +1,13 @@
 package com.hrms.user.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hrms.common.Utils.EmailUtils;
 import com.hrms.common.domain.CONTANTS;
 import com.hrms.common.domain.Msg;
+import com.hrms.personnel.service.PersonnelService;
 import com.hrms.security.utils.TokenUtils;
 import com.hrms.user.dao.DepartmentDao;
 import com.hrms.user.dao.StaffBaseInfoDao;
@@ -26,9 +28,12 @@ public class UserController {
     EmailUtils emailUtils;
     @Autowired
     TokenUtils tokenUtils;
-    private final Gson gson = new Gson();
     @Autowired
     DepartmentDao departmentDao;
+    private Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd")
+            .create();
+
     /**
      * 获取基本资料
      */

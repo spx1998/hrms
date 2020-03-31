@@ -13,6 +13,17 @@
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
         <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
     </resultMap>
+    <insert id="createStaffInfo">
+        insert into staff_base_info(staff_id, name, sex, birthday, phone_number, email, address)
+        values (#{staffCreateInfo.staffId}, #{staffCreateInfo.name}, #{staffCreateInfo.sex},
+                #{staffCreateInfo.birthday}, #{staffCreateInfo.phoneNumber}, #{staffCreateInfo.email},
+                #{staffCreateInfo.address});
+    </insert>
+    <delete id="deleteStaffInfo">
+        delete
+        from staff_base_info
+        where staff_id = #{staffId}
+    </delete>
     <select id="getStaffList" resultMap="StaffBaseInfoMap">
         select *
         from staff_base_info

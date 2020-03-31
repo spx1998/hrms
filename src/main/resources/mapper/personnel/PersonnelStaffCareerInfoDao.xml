@@ -13,6 +13,19 @@
         <result property="contractLength" column="contract_length" jdbcType="INTEGER"/>
         <result property="contractEnd" column="contract_end" jdbcType="TIMESTAMP"/>
     </resultMap>
+    <insert id="createStaffInfo">
+        insert into staff_career_info(staff_id, name, department_id, hire_date, grade, contract_start, contract_length,
+                                      contract_end)
+        values (#{staffCreateInfo.staffId}, #{staffCreateInfo.name}, #{staffCreateInfo.departmentId},
+                #{staffCreateInfo.hireDate},
+                #{staffCreateInfo.grade}, #{staffCreateInfo.contractStart}, #{staffCreateInfo.contractLength},
+                #{staffCreateInfo.contractEnd});
+    </insert>
+    <delete id="deleteStaffInfo">
+        delete
+        from staff_career_info
+        where staff_id = #{staffId}
+    </delete>
     <select id="getStaffList" resultMap="StaffCareerInfoMap">
         select *
         from staff_career_info
