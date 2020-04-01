@@ -20,4 +20,9 @@ public interface SysDepartmentDao {
 
     List<Department> getDepartmentList();
 
+    int countDepartmentByType(String typeStr);
+
+    void createDepartment(@Param("department") Department department);
+
+    boolean changeHr(String departmentId, String hrId, String hrName);
 }

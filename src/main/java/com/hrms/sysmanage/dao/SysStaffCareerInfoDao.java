@@ -1,13 +1,10 @@
 package com.hrms.sysmanage.dao;
 
-import com.hrms.sysmanage.entity.StaffCareerInfo;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * (StaffCareerInfo)表数据库访问层
@@ -19,4 +16,8 @@ import java.util.Map;
 @Mapper
 public interface SysStaffCareerInfoDao {
     List<HashMap<String,Object>> getDepNumMap();
+
+    boolean checkANdTransferMinister(String departmentId, String ministerId, String ministerName);
+
+    int checkHr(String hrId, String hrName);
 }

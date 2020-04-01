@@ -10,9 +10,25 @@
         <result property="hrId" column="hr_id" jdbcType="VARCHAR"/>
         <result property="hrName" column="hr_name" jdbcType="VARCHAR"/>
     </resultMap>
+    <insert id="createDepartment">
+        insert into department(department_id, name, minister_id, minister_name, hr_id, hr_name)
+        values (#{department.departmentId}, #{department.name}, #{department.ministerId}, #{department.ministerName},
+                #{department.hrId}, #{department.hrName})
+    </insert>
+    <update id="changeHr">
+        update department
+        set hr_id=#{param2},
+            hr_name=#{param3}
+        where department_id = #{param1};
+    </update>
     <select id="getDepartmentList" resultMap="DepartmentMap">
         select *
         from department;
+    </select>
+    <select id="countDepartmentByType" resultType="java.lang.Integer">
+        select count(*)
+        from department
+        where department_id like #{typeStr}
     </select>
 
 </mapper>

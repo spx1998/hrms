@@ -14,6 +14,19 @@
         <result property="contractEnd" column="contract_end" jdbcType="TIMESTAMP"/>
         <result property="status" column="status" jdbcType="VARCHAR"/>
     </resultMap>
+    <update id="checkANdTransferMinister">
+        update staff_career_info
+        set department_id = #{param1}
+        where staff_id = #{param2}
+          and name = #{param3};
+    </update>
+    <select id="checkHr" resultType="int">
+        select count(1)
+        from staff_career_info
+        where staff_id = #{param1}
+          and name = #{param2}
+          and department_id = '01001'
+    </select>
 
     <select id="getDepNumMap" resultType="java.util.HashMap">
         select department_id as 'key', count(*) as 'value'

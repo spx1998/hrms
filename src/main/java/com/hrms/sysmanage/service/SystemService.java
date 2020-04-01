@@ -1,7 +1,9 @@
 package com.hrms.sysmanage.service;
 
+import com.hrms.sysmanage.dao.SysDepartmentDao;
 import com.hrms.sysmanage.dao.SysStaffCareerInfoDao;
 import com.hrms.sysmanage.entity.Department;
+import org.apache.ibatis.executor.ExecutorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,9 @@ import java.util.Map;
 
 @Service
 public class SystemService {
+
+    @Autowired
+    SysDepartmentDao sysDepartmentDao;
 
     @Autowired
     SysStaffCareerInfoDao sysStaffCareerInfoDao;
@@ -28,7 +33,7 @@ public class SystemService {
                     if ("key".equals(entry.getKey())) {
                         key = (String) entry.getValue();
                     } else if ("value".equals(entry.getKey())) {
-                        value = ((Long)entry.getValue()).intValue();
+                        value = ((Long) entry.getValue()).intValue();
                     }
                 }
                 map.put(key, value);
@@ -36,10 +41,21 @@ public class SystemService {
         }
         for (Department department : departments) {
             department.setNumber(map.get(department.getDepartmentId()));
-            if(department.getNumber()==null){
+            if (department.getNumber() == null) {
                 department.setNumber(0);
             }
         }
     }
 
+    @Transactional
+    public void createNewDepartment(Department department, String typeStr) throws Exception {
+        //生成departmentId
+        int number = sysDepartmentDao.countDepartmentByType(typeStr + "%") + 1;
+        department.setDepartmentId(typeStr + String.format("%03d", number));
+        if (sysStaffCareerInfoDao.checkHr(department.getHrId(), department.getHrName()) == 1) {
+            if (sysStaffCareerInfoDao.checkANdTransferMinister(department.getDepartmentId(), department.getMinisterId(), department.getMinisterName())) {
+                sysDepartmentDao.createDepartment(department);
+            }
+        } else throw new Exception();
+    }
 }
