@@ -1,6 +1,6 @@
 package com.hrms.personnel.dao;
 
-import com.hrms.personnel.entity.DepartmentNumber;
+import com.hrms.personnel.entity.JobInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -8,13 +8,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * (DepartmentNumber)表数据库访问层
+ * (JobInfo)表数据库访问层
  *
  * @author makejava
- * @since 2020-03-31 12:00:36
+ * @since 2020-04-15 16:00:42
  */
 @Repository
 @Mapper
-public interface DepartmentNumberDao {
-    int getNumberByDepartmentIdAndType(String departmentId, int type);
+public interface PersonnelJobInfoDao {
+
+    List<JobInfo> getJobList();
+
+    String getNameById(Integer jobId);
 }

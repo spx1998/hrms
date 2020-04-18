@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.sysmanage.dao.SysDepartmentNumberDao">
+    <resultMap type="com.hrms.sysmanage.entity.DepartmentNumber" id="DepartmentNumberMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="departmentId" column="department_id" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="number" column="number" jdbcType="INTEGER"/>
+    </resultMap>
+    <insert id="createDepartmentNumber">
+        insert into department_number(department_id, type, number)
+        VALUES (#{departmentId}, 1, 1);
+        insert into department_number(department_id, type, number)
+        VALUES (#{departmentId}, 2, 1);
+    </insert>
+</mapper>

@@ -4,18 +4,22 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.hrms.common.Utils.DateUtils;
 import com.hrms.common.Utils.EmailUtils;
 import com.hrms.common.domain.CONTANTS;
 import com.hrms.common.domain.Msg;
 import com.hrms.personnel.service.PersonnelService;
 import com.hrms.security.utils.TokenUtils;
 import com.hrms.user.dao.DepartmentDao;
+import com.hrms.user.dao.JobInfoDao;
 import com.hrms.user.dao.StaffBaseInfoDao;
 import com.hrms.user.dao.StaffCareerInfoDao;
 import com.hrms.user.entity.StaffBaseInfo;
 import com.hrms.user.entity.StaffCareerInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 public class UserController {
@@ -24,13 +28,23 @@ public class UserController {
     StaffBaseInfoDao staffBaseInfoDao;
     @Autowired
     StaffCareerInfoDao staffCareerInfoDao;
+
+    @Autowired
+    JobInfoDao jobInfoDao;
+
     @Autowired
     EmailUtils emailUtils;
+
     @Autowired
     TokenUtils tokenUtils;
+
+    @Autowired
+    DateUtils dateUtils;
+
     @Autowired
     DepartmentDao departmentDao;
-    private Gson gson = new GsonBuilder()
+
+    private final Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd")
             .create();
 
@@ -63,6 +77,8 @@ public class UserController {
         try {
             String staffId = tokenUtils.getStaffIdFromToken(token);
             StaffCareerInfo staffCareerInfo = staffCareerInfoDao.getCareerInfoById(staffId);
+            staffCareerInfo.setSeniority(dateUtils.yearDifference(new Date(),staffCareerInfo.getHireDate())+"年"+dateUtils.monthDifference(new Date(),staffCareerInfo.getHireDate())+"月");
+            staffCareerInfo.setJobName(jobInfoDao.getNameById(staffCareerInfo.getJobId()));
             staffCareerInfo.setDepartmentName(departmentDao.getDepartmentNameById(staffCareerInfo.getDepartmentId()));
             msg.setStatus(CONTANTS.STATUS_SUCCESS);
             msg.setContent(gson.toJson(staffCareerInfo));

@@ -7,12 +7,11 @@
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="ministerId" column="minister_id" jdbcType="VARCHAR"/>
         <result property="ministerName" column="minister_name" jdbcType="VARCHAR"/>
-        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
-        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="getDepartmentList" resultMap="DepartmentMap">
         select *
-        from department;
+        from department where status='enable';
     </select>
     <select id="getDepartmentById" resultMap="DepartmentMap">
         select *

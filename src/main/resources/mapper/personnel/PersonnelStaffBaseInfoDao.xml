@@ -10,15 +10,35 @@
         <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="address" column="address" jdbcType="VARCHAR"/>
-        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
-        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="education" column="education"/>
+        <result property="nation" column="nation"/>
+        <result property="school" column="school"/>
+        <result property="politicalStatus" column="political_status"/>
+        <result property="status" column="status"/>
     </resultMap>
     <insert id="createStaffInfo">
-        insert into staff_base_info(staff_id, name, sex, birthday, phone_number, email, address)
+        insert into staff_base_info(staff_id, name, sex, birthday, education, school, nation, political_status,
+                                    phone_number, email, address)
         values (#{staffCreateInfo.staffId}, #{staffCreateInfo.name}, #{staffCreateInfo.sex},
-                #{staffCreateInfo.birthday}, #{staffCreateInfo.phoneNumber}, #{staffCreateInfo.email},
+                #{staffCreateInfo.birthday}, #{staffCreateInfo.education}, #{staffCreateInfo.school},
+                #{staffCreateInfo.nation}, #{staffCreateInfo.politicalStatus}, #{staffCreateInfo.phoneNumber},
+                #{staffCreateInfo.email},
                 #{staffCreateInfo.address});
     </insert>
+    <update id="updateStaffInfo">
+        update staff_base_info
+        set name            = #{staffDetailInfo.name},
+            sex=#{staffDetailInfo.sex},
+            nation=#{staffDetailInfo.nation},
+            school=#{staffDetailInfo.school},
+            birthday=#{staffDetailInfo.birthday},
+            education=#{staffDetailInfo.education},
+            political_status=#{staffDetailInfo.politicalStatus},
+            email=#{staffDetailInfo.email},
+            phone_number=#{staffDetailInfo.phoneNumber},
+            address=#{staffDetailInfo.address}
+        where staff_id = #{staffDetailInfo.staffId};
+    </update>
     <delete id="deleteStaffInfo">
         delete
         from staff_base_info
@@ -37,7 +57,7 @@
     <select id="getPendingList" resultMap="StaffBaseInfoMap">
         select *
         from staff_base_info
-        where status = 'create'
+        where status in ('create', 'pending')
     </select>
 
 </mapper>

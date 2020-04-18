@@ -24,6 +24,8 @@ public class PendingListInfo implements Serializable {
 
     private String email;
 
+    private String status;
+
     public PendingListInfo(StaffCareerInfo staffCareerInfo, StaffBaseInfo staffBaseInfo) {
         this.staffId = staffCareerInfo.getStaffId();
         this.name = staffCareerInfo.getName();
@@ -31,6 +33,7 @@ public class PendingListInfo implements Serializable {
         this.hireDate = staffCareerInfo.getHireDate();
         this.phoneNumber = staffBaseInfo.getPhoneNumber();
         this.email = staffBaseInfo.getEmail();
+        this.status = staffBaseInfo.getStatus();
     }
 
     public String getStaffId() {
@@ -87,5 +90,13 @@ public class PendingListInfo implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -25,6 +25,16 @@ public class Department implements Serializable {
 
     private Integer number;
 
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Integer getNumber() {
         return number;
     }

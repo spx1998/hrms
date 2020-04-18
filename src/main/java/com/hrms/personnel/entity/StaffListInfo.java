@@ -19,10 +19,11 @@ public class StaffListInfo implements Serializable {
 
     private String grade;
 
+    private String jobName;
+
     private String phoneNumber;
 
     private String email;
-
 
     public StaffListInfo(StaffCareerInfo staffCareerInfo, StaffBaseInfo staffBaseInfo) {
         this.staffId = staffCareerInfo.getStaffId();
@@ -31,9 +32,18 @@ public class StaffListInfo implements Serializable {
         this.grade = staffCareerInfo.getGrade();
         this.phoneNumber = staffBaseInfo.getPhoneNumber();
         this.email = staffBaseInfo.getEmail();
+        this.jobName = staffCareerInfo.getJobName();
     }
 
     public StaffListInfo() {
+    }
+
+    public String getJobName() {
+        return jobName;
+    }
+
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
     }
 
     public String getStaffId() {

@@ -1,11 +1,8 @@
 package com.hrms.personnel.utils;
 
-import com.hrms.personnel.dao.DepartmentNumberDao;
 import com.hrms.personnel.entity.StaffCreateInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 

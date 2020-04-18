@@ -1,9 +1,9 @@
 package com.hrms.sysmanage.service;
 
 import com.hrms.sysmanage.dao.SysDepartmentDao;
+import com.hrms.sysmanage.dao.SysDepartmentNumberDao;
 import com.hrms.sysmanage.dao.SysStaffCareerInfoDao;
 import com.hrms.sysmanage.entity.Department;
-import org.apache.ibatis.executor.ExecutorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +20,9 @@ public class SystemService {
 
     @Autowired
     SysStaffCareerInfoDao sysStaffCareerInfoDao;
+
+    @Autowired
+    SysDepartmentNumberDao sysDepartmentNumberDao;
 
     @Transactional
     public void getDepartmentNumbers(List<Department> departments) {
@@ -55,6 +58,8 @@ public class SystemService {
         if (sysStaffCareerInfoDao.checkHr(department.getHrId(), department.getHrName()) == 1) {
             if (sysStaffCareerInfoDao.checkANdTransferMinister(department.getDepartmentId(), department.getMinisterId(), department.getMinisterName())) {
                 sysDepartmentDao.createDepartment(department);
+                sysDepartmentNumberDao.createDepartmentNumber(department.getDepartmentId());
+
             }
         } else throw new Exception();
     }

@@ -7,10 +7,10 @@ import java.io.Serializable;
  * (StaffBaseInfo)实体类
  *
  * @author makejava
- * @since 2020-03-27 11:35:10
+ * @since 2020-04-15 16:25:25
  */
 public class StaffBaseInfo implements Serializable {
-    private static final long serialVersionUID = 515654589618565726L;
+    private static final long serialVersionUID = 538843568489746424L;
     /**
     * 员工编号
     */
@@ -26,29 +26,23 @@ public class StaffBaseInfo implements Serializable {
     
     private Date birthday;
     
+    private String education;
+    
+    private String school;
+    
+    private String nation;
+    
+    private String politicalStatus;
+    
     private String phoneNumber;
     
     private String email;
-
+    
     private String address;
-
     /**
-    * 创建人
+    * 创建后为create，完成薪资建表后为pending，激活后为enable，离职后为disable。
     */
-    private String createBy;
-    /**
-    * 创建日期
-    */
-    private Date createDate;
-
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    private String status;
 
 
     public String getStaffId() {
@@ -83,6 +77,38 @@ public class StaffBaseInfo implements Serializable {
         this.birthday = birthday;
     }
 
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getNation() {
+        return nation;
+    }
+
+    public void setNation(String nation) {
+        this.nation = nation;
+    }
+
+    public String getPoliticalStatus() {
+        return politicalStatus;
+    }
+
+    public void setPoliticalStatus(String politicalStatus) {
+        this.politicalStatus = politicalStatus;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -99,20 +125,20 @@ public class StaffBaseInfo implements Serializable {
         this.email = email;
     }
 
-    public String getCreateBy() {
-        return createBy;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public String getStatus() {
+        return status;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

@@ -12,6 +12,7 @@
         <result property="contractStart" column="contract_start" />
         <result property="contractLength" column="contract_length" jdbcType="INTEGER"/>
         <result property="contractEnd" column="contract_end" />
+        <result property="jobId" column="job_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <select id="getCareerInfoById" resultMap="StaffCareerInfoMap">

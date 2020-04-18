@@ -19,6 +19,51 @@ public class StaffCreateInfo implements Serializable {
     private String email;
     private String phoneNumber;
     private String address;
+    private Integer jobId;
+    private String nation;
+    private String politicalStatus;
+    private String education;
+    private String school;
+
+    public String getNation() {
+        return nation;
+    }
+
+    public void setNation(String nation) {
+        this.nation = nation;
+    }
+
+    public String getPoliticalStatus() {
+        return politicalStatus;
+    }
+
+    public void setPoliticalStatus(String politicalStatus) {
+        this.politicalStatus = politicalStatus;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public Integer getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
+    }
 
     public int getGrade() {
         return grade;

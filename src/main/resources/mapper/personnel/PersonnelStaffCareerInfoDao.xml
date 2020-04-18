@@ -8,19 +8,30 @@
         <result property="hireDate" column="hire_date" jdbcType="TIMESTAMP"/>
         <result property="grade" column="grade" jdbcType="VARCHAR"/>
         <result property="departmentId" column="department_id" jdbcType="VARCHAR"/>
-        <result property="seniority" column="seniority" jdbcType="INTEGER"/>
+        <result property="jobId" column="job_id" jdbcType="INTEGER"/>
         <result property="contractStart" column="contract_start" jdbcType="TIMESTAMP"/>
         <result property="contractLength" column="contract_length" jdbcType="INTEGER"/>
         <result property="contractEnd" column="contract_end" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
     </resultMap>
     <insert id="createStaffInfo">
-        insert into staff_career_info(staff_id, name, department_id, hire_date, grade, contract_start, contract_length,
+        insert into staff_career_info(staff_id, name, department_id, hire_date, grade, job_id, contract_start,
+                                      contract_length,
                                       contract_end)
         values (#{staffCreateInfo.staffId}, #{staffCreateInfo.name}, #{staffCreateInfo.departmentId},
                 #{staffCreateInfo.hireDate},
-                #{staffCreateInfo.grade}, #{staffCreateInfo.contractStart}, #{staffCreateInfo.contractLength},
+                #{staffCreateInfo.grade},
+                #{staffCreateInfo.jobId}, #{staffCreateInfo.contractStart}, #{staffCreateInfo.contractLength},
                 #{staffCreateInfo.contractEnd});
     </insert>
+    <update id="updateStaffInfo">
+        update staff_career_info
+        set name         = #{staffDetailInfo.name},
+            department_id=#{staffDetailInfo.departmentId},
+            job_id=#{staffDetailInfo.jobId},
+            grade=#{staffDetailInfo.grade}
+        where staff_id = #{staffDetailInfo.staffId};
+    </update>
     <delete id="deleteStaffInfo">
         delete
         from staff_career_info
@@ -39,7 +50,7 @@
     <select id="getPendingList" resultMap="StaffCareerInfoMap">
         select *
         from staff_career_info
-        where status = 'create'
+        where status in('create','pending');
     </select>
 
 </mapper>

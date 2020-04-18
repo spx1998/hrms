@@ -17,13 +17,11 @@ public class StaffDetailInfo implements Serializable {
 
     private String departmentId;
 
-    private String departmentName;
-
     private String grade;
 
     private Date hireDate;
 
-    private int seniority;
+    private String seniority;
 
     private Date contractStart;
 
@@ -35,11 +33,17 @@ public class StaffDetailInfo implements Serializable {
 
     private String address;
 
+    private String nation;
+    private String school;
+    private String education;
+    private String politicalStatus;
+    private int jobId;
+
     public StaffDetailInfo() {
 
     }
 
-    public StaffDetailInfo(StaffBaseInfo staffBaseInfo, StaffCareerInfo staffCareerInfo, Department department) {
+    public StaffDetailInfo(StaffBaseInfo staffBaseInfo, StaffCareerInfo staffCareerInfo) {
         this.staffId = staffBaseInfo.getStaffId();
         this.name = staffBaseInfo.getName();
         this.sex = staffBaseInfo.getSex();
@@ -50,11 +54,54 @@ public class StaffDetailInfo implements Serializable {
         this.departmentId = staffCareerInfo.getDepartmentId();
         this.grade = staffCareerInfo.getGrade();
         this.seniority = staffCareerInfo.getSeniority();
-        this.hireDate =staffCareerInfo.getHireDate();
+        this.hireDate = staffCareerInfo.getHireDate();
         this.contractStart = staffCareerInfo.getContractStart();
         this.contractEnd = staffCareerInfo.getContractEnd();
-        this.departmentName = department.getName();
+        this.nation = staffBaseInfo.getNation();
+        this.education = staffBaseInfo.getEducation();
+        this.politicalStatus = staffBaseInfo.getPoliticalStatus();
+        this.school = staffBaseInfo.getSchool();
+        this.jobId = staffCareerInfo.getJobId();
+    }
 
+    public String getNation() {
+        return nation;
+    }
+
+    public int getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(int jobId) {
+        this.jobId = jobId;
+    }
+
+    public void setNation(String nation) {
+        this.nation = nation;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getPoliticalStatus() {
+        return politicalStatus;
+    }
+
+    public void setPoliticalStatus(String politicalStatus) {
+        this.politicalStatus = politicalStatus;
     }
 
     public String getStaffId() {
@@ -97,13 +144,6 @@ public class StaffDetailInfo implements Serializable {
         this.departmentId = departmentId;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
-    }
-
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
-    }
 
     public String getGrade() {
         return grade;
@@ -121,11 +161,11 @@ public class StaffDetailInfo implements Serializable {
         this.hireDate = hireDate;
     }
 
-    public int getSeniority() {
+    public String getSeniority() {
         return seniority;
     }
 
-    public void setSeniority(int seniority) {
+    public void setSeniority(String seniority) {
         this.seniority = seniority;
     }
 

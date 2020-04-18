@@ -24,17 +24,43 @@ public class StaffCareerInfo implements Serializable {
     private String grade;
 
     private String departmentId;
+    private Integer jobId;
+    private String jobName;
     /**
-     * 工龄 需要有函数修改 还有签约日期 到期时间 工资 工资卡号 备注等属性
+     *
      */
-    private Integer seniority;
+    private String seniority;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date contractStart;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Integer contractLength;
 
     private Date contractEnd;
+    private String status;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
+    }
+
+    public String getJobName() {
+        return jobName;
+    }
+
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
+    }
 
     public String getStaffId() {
         return staffId;
@@ -76,11 +102,11 @@ public class StaffCareerInfo implements Serializable {
         this.departmentId = departmentId;
     }
 
-    public Integer getSeniority() {
+    public String getSeniority() {
         return seniority;
     }
 
-    public void setSeniority(Integer seniority) {
+    public void setSeniority(String seniority) {
         this.seniority = seniority;
     }
 

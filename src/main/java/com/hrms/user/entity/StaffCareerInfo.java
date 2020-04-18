@@ -25,10 +25,12 @@ public class StaffCareerInfo implements Serializable {
     
     private String departmentId;
     private String departmentName;
+    private Integer jobId;
+    private String jobName;
     /**
     * 工龄 需要有函数修改 还有签约日期 到期时间 工资 工资卡号 备注等属性
     */
-    private Integer seniority;
+    private String seniority;
 
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
 
@@ -88,11 +90,11 @@ public class StaffCareerInfo implements Serializable {
         this.departmentName = departmentName;
     }
 
-    public Integer getSeniority() {
+    public String getSeniority() {
         return seniority;
     }
 
-    public void setSeniority(Integer seniority) {
+    public void setSeniority(String seniority) {
         this.seniority = seniority;
     }
 
@@ -120,4 +122,19 @@ public class StaffCareerInfo implements Serializable {
         this.contractEnd = contractEnd;
     }
 
+    public Integer getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
+    }
+
+    public String getJobName() {
+        return jobName;
+    }
+
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
+    }
 }

@@ -1,4 +1,4 @@
-package com.hrms.personnel.entity;
+package com.hrms.sysmanage.entity;
 
 import java.io.Serializable;
 
@@ -6,12 +6,12 @@ import java.io.Serializable;
  * (DepartmentNumber)实体类
  *
  * @author makejava
- * @since 2020-03-31 12:00:36
+ * @since 2020-04-15 10:28:02
  */
 public class DepartmentNumber implements Serializable {
-    private static final long serialVersionUID = 338124610014529450L;
-
-    private int id;
+    private static final long serialVersionUID = -20531253066545028L;
+    
+    private Integer id;
     
     private String departmentId;
     /**
@@ -21,11 +21,12 @@ public class DepartmentNumber implements Serializable {
     
     private Integer number;
 
-    public int getId() {
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

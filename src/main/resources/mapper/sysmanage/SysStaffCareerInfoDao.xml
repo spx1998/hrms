@@ -8,7 +8,6 @@
         <result property="departmentId" column="department_id" jdbcType="VARCHAR"/>
         <result property="hireDate" column="hire_date" jdbcType="TIMESTAMP"/>
         <result property="grade" column="grade" jdbcType="VARCHAR"/>
-        <result property="seniority" column="seniority" jdbcType="INTEGER"/>
         <result property="contractStart" column="contract_start" jdbcType="TIMESTAMP"/>
         <result property="contractLength" column="contract_length" jdbcType="INTEGER"/>
         <result property="contractEnd" column="contract_end" jdbcType="TIMESTAMP"/>

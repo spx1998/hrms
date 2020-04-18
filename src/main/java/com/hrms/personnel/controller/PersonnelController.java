@@ -4,18 +4,17 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.hrms.common.Utils.DateUtils;
 import com.hrms.common.domain.CONTANTS;
 import com.hrms.common.domain.Msg;
-import com.hrms.personnel.dao.PersonnelDepartmentDao;
-import com.hrms.personnel.dao.PersonnelLoginInfoDao;
-import com.hrms.personnel.dao.PersonnelStaffBaseInfoDao;
-import com.hrms.personnel.dao.PersonnelStaffCareerInfoDao;
+import com.hrms.personnel.dao.*;
 import com.hrms.personnel.entity.*;
 import com.hrms.personnel.service.PersonnelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,10 +32,16 @@ public class PersonnelController {
     @Autowired
     PersonnelLoginInfoDao personnelLoginInfoDao;
 
+    @Autowired
+    PersonnelJobInfoDao personnelJobInfoDao;
 
     @Autowired
     PersonnelService personnelService;
-    private Gson gson = new GsonBuilder()
+
+    @Autowired
+    DateUtils dateUtils;
+
+    private final Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd")
             .create();
 
@@ -50,11 +55,17 @@ public class PersonnelController {
             List<StaffListInfo> staffListInfos = new ArrayList<>();
             List<StaffBaseInfo> staffBaseInfos = personnelStaffBaseInfoDao.getStaffList();
             List<StaffCareerInfo> staffCareerInfos = personnelStaffCareerInfoDao.getStaffList();
+            List<JobInfo> jobInfos = personnelJobInfoDao.getJobList();
             HashMap<String, StaffBaseInfo> staffBaseInfoHashMap = new HashMap<>();
+            HashMap<Integer, String> jobHashMap = new HashMap<>();
+            for (JobInfo jobInfo : jobInfos) {
+                jobHashMap.put(jobInfo.getId(), jobInfo.getName());
+            }
             for (StaffBaseInfo staffBaseInfo : staffBaseInfos) {
                 staffBaseInfoHashMap.put(staffBaseInfo.getStaffId(), staffBaseInfo);
             }
             for (StaffCareerInfo staffCareerInfo : staffCareerInfos) {
+                staffCareerInfo.setJobName(jobHashMap.get(staffCareerInfo.getJobId()));
                 staffListInfos.add(new StaffListInfo(staffCareerInfo, staffBaseInfoHashMap.get(staffCareerInfo.getStaffId())));
             }
             msg.setStatus(CONTANTS.STATUS_SUCCESS);
@@ -71,15 +82,32 @@ public class PersonnelController {
      * 获取职员详细信息
      */
     @GetMapping("/staff/info")
-    public String getStaffInfo(@RequestParam("staffId") String staffId) {
+    public String getStaffDetail(@RequestParam("staffId") String staffId) {
         Msg msg = new Msg();
         try {
             StaffBaseInfo staffBaseInfo = personnelStaffBaseInfoDao.getStaffById(staffId);
             StaffCareerInfo staffCareerInfo = personnelStaffCareerInfoDao.getStaffById(staffId);
-            Department department = personnelDepartmentDao.getDepartmentById(staffCareerInfo.getDepartmentId());
-            StaffDetailInfo staffDetailInfo = new StaffDetailInfo(staffBaseInfo, staffCareerInfo, department);
+            staffCareerInfo.setSeniority(dateUtils.yearDifference(new Date(), staffCareerInfo.getHireDate()) + "年" + dateUtils.monthDifference(new Date(), staffCareerInfo.getHireDate()) + "月");
+            StaffDetailInfo staffDetailInfo = new StaffDetailInfo(staffBaseInfo, staffCareerInfo);
             msg.setStatus(CONTANTS.STATUS_SUCCESS);
             msg.setContent(gson.toJson(staffDetailInfo));
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg.setStatus(CONTANTS.STATUS_ERROR);
+        }
+        return gson.toJson(msg);
+    }
+
+    /**
+     * 修改员工信息
+     */
+    @PostMapping("/staff/update")
+    public String staffUpdate(@RequestBody String str) {
+        Msg msg = new Msg();
+        try {
+            StaffDetailInfo staffDetailInfo = gson.fromJson(str, StaffDetailInfo.class);
+            personnelService.updateStaff(staffDetailInfo);
+            msg.setStatus(CONTANTS.STATUS_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
             msg.setStatus(CONTANTS.STATUS_ERROR);
@@ -149,17 +177,34 @@ public class PersonnelController {
     }
 
     /**
-     *
+     * 删除待入职人员
      */
     @PostMapping("/staff/pending/del")
-    public String deletePendingStaff(@RequestBody String jsonStr){
+    public String deletePendingStaff(@RequestBody String jsonStr) {
         Msg msg = new Msg();
         try {
             JsonObject jsonObject = new JsonParser().parse(jsonStr).getAsJsonObject();
             String staffId = jsonObject.get("staffId").getAsString();
             personnelService.deletePendingStaff(staffId);
             msg.setStatus(CONTANTS.STATUS_SUCCESS);
-        }catch (Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg.setStatus(CONTANTS.STATUS_ERROR);
+        }
+        return gson.toJson(msg);
+    }
+
+    /**
+     * 获取职位列表
+     */
+    @GetMapping("/staff/job/list")
+    public String getJobList() {
+        Msg msg = new Msg();
+        try {
+            List<JobInfo> jobInfos = personnelJobInfoDao.getJobList();
+            msg.setStatus(CONTANTS.STATUS_SUCCESS);
+            msg.setContent(gson.toJson(jobInfos));
+        } catch (Exception e) {
             e.printStackTrace();
             msg.setStatus(CONTANTS.STATUS_ERROR);
         }

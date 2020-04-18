@@ -2,6 +2,7 @@ package com.hrms.personnel.dao;
 
 import com.hrms.personnel.entity.StaffBaseInfo;
 import com.hrms.personnel.entity.StaffCreateInfo;
+import com.hrms.personnel.entity.StaffDetailInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -27,4 +28,6 @@ public interface PersonnelStaffBaseInfoDao {
     void createStaffInfo(@Param("staffCreateInfo")StaffCreateInfo staffCreateInfo);
 
     void deleteStaffInfo(String staffId);
+
+    int updateStaffInfo(@Param("staffDetailInfo")StaffDetailInfo staffDetailInfo);
 }

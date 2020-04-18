@@ -9,6 +9,7 @@
         <result property="ministerName" column="minister_name" jdbcType="VARCHAR"/>
         <result property="hrId" column="hr_id" jdbcType="VARCHAR"/>
         <result property="hrName" column="hr_name" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
     </resultMap>
     <insert id="createDepartment">
         insert into department(department_id, name, minister_id, minister_name, hr_id, hr_name)
@@ -23,12 +24,13 @@
     </update>
     <select id="getDepartmentList" resultMap="DepartmentMap">
         select *
-        from department;
+        from department
+        where status = 'enable';
     </select>
     <select id="countDepartmentByType" resultType="java.lang.Integer">
         select count(*)
         from department
-        where department_id like #{typeStr}
+        where department_id like #{typeStr};
     </select>
 
 </mapper>
