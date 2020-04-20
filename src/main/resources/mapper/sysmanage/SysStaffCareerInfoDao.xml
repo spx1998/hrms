@@ -33,5 +33,17 @@
         where status = 'enable'
         group by department_id;
     </select>
+    <select id="getJobNumber" resultType="java.lang.Integer">
+        select count(*)
+        from staff_career_info
+        where job_id = #{id}
+          and status != 'disable';
+    </select>
+    <select id="getDepNumber" resultType="java.lang.Integer">
+        select count(*)
+        from staff_career_info
+        where department_id = #{departmentId}
+          and status != 'disable';
+    </select>
 
 </mapper>

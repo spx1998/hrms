@@ -24,5 +24,15 @@ public interface SysDepartmentDao {
 
     void createDepartment(@Param("department") Department department);
 
-    boolean changeHr(String departmentId, String hrId, String hrName);
+    boolean updateDepartment(String departmentId,String name, String hrId, String hrName);
+
+    List<Department> getBuildingList();
+
+    void deleteBuildingDepartment(String departmentId);
+
+    List<Department> getAllDepartments();
+
+    void activeDepartment(String departmentId);
+
+    void deleteDepartment(String departmentId);
 }

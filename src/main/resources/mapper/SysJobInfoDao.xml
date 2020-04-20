@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.sysmanage.dao.SysJobInfoDao">
+
+    <resultMap type="com.hrms.sysmanage.entity.JobInfo" id="JobInfoMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="departmentId" column="department_id" jdbcType="VARCHAR"/>
+        <result property="grade" column="grade" jdbcType="INTEGER"/>
+    </resultMap>
+    <insert id="addJobInfo">
+        insert into job_info(name, department_id, grade)
+        VALUES (#{jobInfo.name}, #{jobInfo.departmentId}, #{jobInfo.grade});
+    </insert>
+    <delete id="deleteJobInfo">
+        delete
+        from job_info
+        where id = #{id};
+    </delete>
+    <select id="getJobList" resultMap="JobInfoMap">
+        select *
+        from job_info;
+    </select>
+
+
+</mapper>

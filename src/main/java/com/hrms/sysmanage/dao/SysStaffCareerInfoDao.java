@@ -20,4 +20,8 @@ public interface SysStaffCareerInfoDao {
     boolean checkANdTransferMinister(String departmentId, String ministerId, String ministerName);
 
     int checkHr(String hrId, String hrName);
+
+    int getJobNumber(Integer id);
+
+    int getDepNumber(String departmentId);
 }

@@ -16,12 +16,29 @@
         values (#{department.departmentId}, #{department.name}, #{department.ministerId}, #{department.ministerName},
                 #{department.hrId}, #{department.hrName})
     </insert>
-    <update id="changeHr">
+    <update id="updateDepartment">
         update department
-        set hr_id=#{param2},
-            hr_name=#{param3}
+        set name   = #{param2},
+            hr_id=#{param3},
+            hr_name=#{param4}
         where department_id = #{param1};
     </update>
+    <update id="activeDepartment">
+        update department
+        set status='enable'
+        where department_id = #{departmentId};
+    </update>
+    <delete id="deleteBuildingDepartment">
+        delete
+        from department
+        where department_id = #{departmentId};
+    </delete>
+    <update id="deleteDepartment">
+        update department
+        set status='disable'
+        where department_id = #{departmentId};
+    </update>
+
     <select id="getDepartmentList" resultMap="DepartmentMap">
         select *
         from department
@@ -31,6 +48,16 @@
         select count(*)
         from department
         where department_id like #{typeStr};
+    </select>
+    <select id="getBuildingList" resultMap="DepartmentMap">
+        select *
+        from department
+        where status = 'create';
+    </select>
+    <select id="getAllDepartments" resultMap="DepartmentMap">
+        select *
+        from department
+        where status in ('create', 'enable');
     </select>
 
 </mapper>

@@ -1,7 +1,9 @@
 package com.hrms.sysmanage.service;
 
+import com.hrms.personnel.entity.JobInfo;
 import com.hrms.sysmanage.dao.SysDepartmentDao;
 import com.hrms.sysmanage.dao.SysDepartmentNumberDao;
+import com.hrms.sysmanage.dao.SysJobInfoDao;
 import com.hrms.sysmanage.dao.SysStaffCareerInfoDao;
 import com.hrms.sysmanage.entity.Department;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class SystemService {
 
     @Autowired
     SysDepartmentNumberDao sysDepartmentNumberDao;
+
+    @Autowired
+    SysJobInfoDao sysJobInfoDao;
 
     @Transactional
     public void getDepartmentNumbers(List<Department> departments) {
@@ -51,16 +56,39 @@ public class SystemService {
     }
 
     @Transactional
-    public void createNewDepartment(Department department, String typeStr) throws Exception {
+    public boolean createNewDepartment(Department department, String typeStr) throws Exception {
         //生成departmentId
         int number = sysDepartmentDao.countDepartmentByType(typeStr + "%") + 1;
         department.setDepartmentId(typeStr + String.format("%03d", number));
         if (sysStaffCareerInfoDao.checkHr(department.getHrId(), department.getHrName()) == 1) {
+            //TODO: 新增部门的负责人该如何处理：现行有问题。
             if (sysStaffCareerInfoDao.checkANdTransferMinister(department.getDepartmentId(), department.getMinisterId(), department.getMinisterName())) {
                 sysDepartmentDao.createDepartment(department);
                 sysDepartmentNumberDao.createDepartmentNumber(department.getDepartmentId());
+                return true;
+            } else return false;
+        } else return false;
+    }
 
-            }
-        } else throw new Exception();
+    @Transactional
+    public void createJobInfo(JobInfo jobInfo, String status) {
+        if (!"enable".equals(status)) {
+            sysDepartmentDao.activeDepartment(jobInfo.getDepartmentId());
+        }
+        sysJobInfoDao.addJobInfo(jobInfo);
+    }
+
+    public boolean deleteJobInfo(JobInfo jobInfo) {
+        if (sysStaffCareerInfoDao.getJobNumber(jobInfo.getId()) == 0) {
+            sysJobInfoDao.deleteJobInfo(jobInfo.getId());
+            return true;
+        } else return false;
+    }
+
+    public boolean deleteDepartment(Department department) {
+        if (sysStaffCareerInfoDao.getDepNumber(department.getDepartmentId()) == 0) {
+            sysDepartmentDao.deleteDepartment(department.getDepartmentId());
+            return true;
+        } else return false;
     }
 }
