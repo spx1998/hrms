@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * (StaffCareerInfo)表数据库访问层
@@ -30,4 +31,10 @@ public interface PersonnelStaffCareerInfoDao {
     void deleteStaffInfo(String staffId);
 
     int updateStaffInfo(@Param("staffDetailInfo") StaffDetailInfo staffDetailInfo);
+
+    int staffTransfer(@Param("staffCareerInfo") StaffCareerInfo staffCareerInfo);
+
+    boolean checkInfo(String staffId, String name);
+
+    List<StaffCareerInfo> getLeavingList(Set<String> staffIds);
 }

@@ -22,6 +22,7 @@ public class EmailUtils {
 
     /**
      * 发送验证码
+     *
      * @param email
      * @return
      */
@@ -39,6 +40,7 @@ public class EmailUtils {
 
     /**
      * 发送邮件的通用方法
+     *
      * @param email
      * @param subject
      * @param content
@@ -57,16 +59,15 @@ public class EmailUtils {
             };
             Session session = Session.getInstance(properties, authenticator);
             Message mailMessage = new MimeMessage(session);
-            Address from = new InternetAddress(emailName+tail);
+            Address from = new InternetAddress(emailName + tail);
             Address to = new InternetAddress(email);
             mailMessage.setFrom(from);
-//            mailMessage.addRecipient(MimeMessage.RecipientType.CC, from);
             mailMessage.addRecipient(Message.RecipientType.TO, to);
             mailMessage.setSubject(subject);//设置邮件标题
             mailMessage.setText(content);
             Transport.send(mailMessage);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

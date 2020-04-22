@@ -17,7 +17,7 @@ public class StaffDetailInfo implements Serializable {
 
     private String departmentId;
 
-    private String grade;
+    private Integer grade;
 
     private Date hireDate;
 
@@ -145,11 +145,11 @@ public class StaffDetailInfo implements Serializable {
     }
 
 
-    public String getGrade() {
+    public Integer getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Integer grade) {
         this.grade = grade;
     }
 

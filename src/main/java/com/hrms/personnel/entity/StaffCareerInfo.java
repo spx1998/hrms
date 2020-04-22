@@ -21,7 +21,7 @@ public class StaffCareerInfo implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date hireDate;
 
-    private String grade;
+    private Integer grade;
 
     private String departmentId;
     private Integer jobId;
@@ -86,11 +86,11 @@ public class StaffCareerInfo implements Serializable {
         this.hireDate = hireDate;
     }
 
-    public String getGrade() {
+    public Integer getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Integer grade) {
         this.grade = grade;
     }
 

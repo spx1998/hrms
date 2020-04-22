@@ -7,7 +7,7 @@
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="departmentId" column="department_id" jdbcType="VARCHAR"/>
         <result property="hireDate" column="hire_date" jdbcType="TIMESTAMP"/>
-        <result property="grade" column="grade" jdbcType="VARCHAR"/>
+        <result property="grade" column="grade" jdbcType="INTEGER"/>
         <result property="contractStart" column="contract_start" jdbcType="TIMESTAMP"/>
         <result property="contractLength" column="contract_length" jdbcType="INTEGER"/>
         <result property="contractEnd" column="contract_end" jdbcType="TIMESTAMP"/>
@@ -19,6 +19,7 @@
         where staff_id = #{param2}
           and name = #{param3};
     </update>
+
     <select id="checkHr" resultType="int">
         select count(1)
         from staff_career_info

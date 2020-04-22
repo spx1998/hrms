@@ -1,4 +1,4 @@
-package com.hrms.sysmanage.entity;
+package com.hrms.performance.entity;
 
 import java.sql.Date;
 import java.io.Serializable;
@@ -7,10 +7,10 @@ import java.io.Serializable;
  * (StaffCareerInfo)实体类
  *
  * @author makejava
- * @since 2020-03-31 20:36:43
+ * @since 2020-04-21 17:26:51
  */
 public class StaffCareerInfo implements Serializable {
-    private static final long serialVersionUID = 356138889725240590L;
+    private static final long serialVersionUID = 669715031823866530L;
     
     private String staffId;
     
@@ -20,9 +20,9 @@ public class StaffCareerInfo implements Serializable {
     
     private Date hireDate;
     
-    private Integer grade;
+    private String grade;
     
-    private Integer seniority;
+    private Integer jobId;
     
     private Date contractStart;
     
@@ -65,20 +65,20 @@ public class StaffCareerInfo implements Serializable {
         this.hireDate = hireDate;
     }
 
-    public Integer getGrade() {
+    public String getGrade() {
         return grade;
     }
 
-    public void setGrade(Integer grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
     }
 
-    public Integer getSeniority() {
-        return seniority;
+    public Integer getJobId() {
+        return jobId;
     }
 
-    public void setSeniority(Integer seniority) {
-        this.seniority = seniority;
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
     }
 
     public Date getContractStart() {

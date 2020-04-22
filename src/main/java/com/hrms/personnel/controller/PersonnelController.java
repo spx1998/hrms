@@ -41,6 +41,9 @@ public class PersonnelController {
     @Autowired
     DateUtils dateUtils;
 
+    @Autowired
+    PersonnelReasonDao personnelReasonDao;
+
     private final Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd")
             .create();
@@ -207,6 +210,78 @@ public class PersonnelController {
         } catch (Exception e) {
             e.printStackTrace();
             msg.setStatus(CONTANTS.STATUS_ERROR);
+        }
+        return gson.toJson(msg);
+    }
+
+    /**
+     * 员工调动
+     */
+    @PostMapping("/staff/transfer")
+    public String staffTransfer(@RequestBody String jsonStr) {
+        Msg msg = new Msg();
+        try {
+            //TODO: 根据token获取角色，判断能否进行该调动操作。
+            StaffCareerInfo staffCareerInfo = gson.fromJson(jsonStr, StaffCareerInfo.class);
+            if (personnelService.staffTransfer(staffCareerInfo))
+                msg.setStatus(CONTANTS.STATUS_SUCCESS);
+            else msg.setStatus(CONTANTS.STATUS_WRONG);
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg.setContent(CONTANTS.STATUS_ERROR);
+        }
+        return gson.toJson(msg);
+    }
+
+    /**
+     * 获取离职原因列表
+     */
+    @GetMapping("/staff/dismiss/reason")
+    public String getReasonList() {
+        Msg msg = new Msg();
+        try {
+            List<Reason> reasonList = personnelReasonDao.getReasonList();
+            msg.setStatus(CONTANTS.STATUS_SUCCESS);
+            msg.setContent(gson.toJson(reasonList));
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg.setContent(CONTANTS.STATUS_ERROR);
+        }
+        return gson.toJson(msg);
+    }
+
+    /**
+     * 解雇员工
+     */
+    @PostMapping("/staff/dismiss")
+    public String dismissStaff(@RequestBody String jsonStr) {
+        Msg msg = new Msg();
+        try {
+            DisableStaff disableStaff = gson.fromJson(jsonStr, DisableStaff.class);
+            if (personnelService.dismissStaff(disableStaff))
+                msg.setStatus(CONTANTS.STATUS_SUCCESS);
+            else msg.setStatus(CONTANTS.STATUS_WRONG);
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg.setContent(CONTANTS.STATUS_ERROR);
+        }
+        return gson.toJson(msg);
+    }
+
+    /**
+     * 离职员工列表
+     */
+    @GetMapping("/staff/leaving/list")
+    public String getLeavingList() {
+        Msg msg = new Msg();
+        try {
+            List<DisableStaff> list = personnelService.getLeavingList();
+            msg.setStatus(CONTANTS.STATUS_SUCCESS);
+            msg.setContent(gson.toJson(list));
+        } catch (
+                Exception e) {
+            e.printStackTrace();
+            msg.setContent(CONTANTS.STATUS_ERROR);
         }
         return gson.toJson(msg);
     }

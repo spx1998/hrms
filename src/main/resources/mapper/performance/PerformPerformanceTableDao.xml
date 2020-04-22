@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.performance.dao.PerformPerformanceTableDao">
+
+    <resultMap type="com.hrms.performance.entity.PerformanceTable" id="PerformanceTableMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="staffId" column="staff_id" jdbcType="VARCHAR"/>
+        <result property="month" column="month" jdbcType="VARCHAR"/>
+        <result property="performanceLevel" column="performance_level" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="score">
+        insert into performance_table(staff_id, month, performance_level, remark) value (#{performanceTable.staffId},
+                                                                                         #{performanceTable.month},
+                                                                                         #{performanceTable.performanceLevel},
+                                                                                         #{performanceTable.remark});
+    </insert>
+    <select id="getPerformanceTableList" resultMap="PerformanceTableMap">
+        select *
+        from performance_table
+        where month = #{month};
+    </select>
+    <select id="getHistoryByStaffId" resultMap="PerformanceTableMap">
+        select *
+        from performance_table
+        where staff_id = #{staffId};
+    </select>
+
+</mapper>

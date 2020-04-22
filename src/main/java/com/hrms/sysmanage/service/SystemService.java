@@ -1,6 +1,8 @@
 package com.hrms.sysmanage.service;
 
+import com.hrms.personnel.dao.PersonnelLoginInfoDao;
 import com.hrms.personnel.entity.JobInfo;
+import com.hrms.personnel.entity.StaffCareerInfo;
 import com.hrms.sysmanage.dao.SysDepartmentDao;
 import com.hrms.sysmanage.dao.SysDepartmentNumberDao;
 import com.hrms.sysmanage.dao.SysJobInfoDao;
@@ -78,6 +80,7 @@ public class SystemService {
         sysJobInfoDao.addJobInfo(jobInfo);
     }
 
+    @Transactional
     public boolean deleteJobInfo(JobInfo jobInfo) {
         if (sysStaffCareerInfoDao.getJobNumber(jobInfo.getId()) == 0) {
             sysJobInfoDao.deleteJobInfo(jobInfo.getId());
@@ -85,10 +88,12 @@ public class SystemService {
         } else return false;
     }
 
+    @Transactional
     public boolean deleteDepartment(Department department) {
         if (sysStaffCareerInfoDao.getDepNumber(department.getDepartmentId()) == 0) {
             sysDepartmentDao.deleteDepartment(department.getDepartmentId());
             return true;
         } else return false;
     }
+
 }

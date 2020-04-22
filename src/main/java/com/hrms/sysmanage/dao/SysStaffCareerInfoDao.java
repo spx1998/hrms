@@ -1,6 +1,8 @@
 package com.hrms.sysmanage.dao;
 
+import com.hrms.personnel.entity.StaffCareerInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -24,4 +26,6 @@ public interface SysStaffCareerInfoDao {
     int getJobNumber(Integer id);
 
     int getDepNumber(String departmentId);
+
+    int staffTransfer(@Param("staffCareerInfo") StaffCareerInfo staffCareerInfo);
 }

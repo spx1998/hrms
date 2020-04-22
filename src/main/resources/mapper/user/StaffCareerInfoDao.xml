@@ -6,7 +6,7 @@
         <result property="staffId" column="staff_id" jdbcType="VARCHAR"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="hireDate" column="hire_date"/>
-        <result property="grade" column="grade" jdbcType="VARCHAR"/>
+        <result property="grade" column="grade" jdbcType="INTEGER"/>
         <result property="departmentId" column="department_id" jdbcType="VARCHAR"/>
         <result property="seniority" column="seniority" jdbcType="INTEGER"/>
         <result property="contractStart" column="contract_start" />

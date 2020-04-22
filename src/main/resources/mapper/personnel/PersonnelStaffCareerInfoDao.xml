@@ -6,7 +6,7 @@
         <result property="staffId" column="staff_id" jdbcType="VARCHAR"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="hireDate" column="hire_date" jdbcType="TIMESTAMP"/>
-        <result property="grade" column="grade" jdbcType="VARCHAR"/>
+        <result property="grade" column="grade" jdbcType="INTEGER"/>
         <result property="departmentId" column="department_id" jdbcType="VARCHAR"/>
         <result property="jobId" column="job_id" jdbcType="INTEGER"/>
         <result property="contractStart" column="contract_start" jdbcType="TIMESTAMP"/>
@@ -32,6 +32,13 @@
             grade=#{staffDetailInfo.grade}
         where staff_id = #{staffDetailInfo.staffId};
     </update>
+    <update id="staffTransfer">
+        update staff_career_info
+        set department_id =#{staffCareerInfo.departmentId},
+            job_id        =#{staffCareerInfo.jobId}
+        where staff_id = #{staffCareerInfo.staffId}
+          and name = #{staffCareerInfo.name};
+    </update>
     <delete id="deleteStaffInfo">
         delete
         from staff_career_info
@@ -50,7 +57,21 @@
     <select id="getPendingList" resultMap="StaffCareerInfoMap">
         select *
         from staff_career_info
-        where status in('create','pending');
+        where status in ('create', 'pending');
+    </select>
+    <select id="checkInfo" resultType="java.lang.Boolean">
+        select count(*)
+        from staff_career_info
+        where staff_id = #{param1}
+          and name = #{param2};
+    </select>
+    <select id="getLeavingList" resultMap="StaffCareerInfoMap" parameterType="java.util.Set">
+        select staff_id, name, department_id
+        from staff_career_info
+        where staff_id in
+        <foreach collection="collection" item="staffId" open="(" close=")" separator=",">
+            #{staffId}
+        </foreach>
     </select>
 
 </mapper>

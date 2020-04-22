@@ -12,7 +12,7 @@
         from submodules;
     </select>
     <select id="getSubmoduleByRole" resultMap="SubmodulesMap">
-        select * from submodules where submodule_id in (select submodule_id from role_submod where role_id=#{roleId})
+        select * from submodules where submodule_id in (select submod_id from role_submod where role_id=#{roleId})
     </select>
 
 

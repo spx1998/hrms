@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.personnel.dao.PersonnelDisableStaffDao">
+
+    <resultMap type="com.hrms.personnel.entity.DisableStaff" id="DisableStaffMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="staffId" column="staff_id" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="reason" column="reason" jdbcType="INTEGER"/>
+        <result property="leaveDate" column="leave_date" jdbcType="TIMESTAMP"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="addInfo">
+        insert into disable_staff (staff_id, name, reason, leave_date, content)
+        VALUES (#{disableStaff.staffId}, #{disableStaff.name}, #{disableStaff.reason}, #{disableStaff.leaveDate},
+                #{disableStaff.content});
+    </insert>
+    <select id="getLeavingList" resultMap="DisableStaffMap">
+        select *
+        from disable_staff
+        where leave_date > current_date;
+    </select>
+
+</mapper>

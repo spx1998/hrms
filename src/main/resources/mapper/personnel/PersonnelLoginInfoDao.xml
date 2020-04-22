@@ -13,6 +13,11 @@
         insert into login_info(staff_id, username, role_id, email)
         values (#{param1.staffId}, #{param2}, #{param3}, #{param1.email});
     </insert>
+    <update id="updateRoles">
+        update login_info
+        set role_id = #{param2}
+        where staff_id = #{param1};
+    </update>
     <delete id="deleteStaffInfo">
         delete
         from login_info

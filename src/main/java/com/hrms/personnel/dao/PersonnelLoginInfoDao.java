@@ -17,4 +17,6 @@ public interface PersonnelLoginInfoDao {
     void createLoginInfo(StaffCreateInfo staffCreateInfo, String username, int roleId);
 
     void deleteStaffInfo(String staffId);
+
+    boolean updateRoles(String staffId, int role);
 }

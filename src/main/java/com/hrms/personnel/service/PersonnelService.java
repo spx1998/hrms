@@ -2,6 +2,8 @@ package com.hrms.personnel.service;
 
 import com.hrms.common.Utils.PinyinUtils;
 import com.hrms.personnel.dao.*;
+import com.hrms.personnel.entity.DisableStaff;
+import com.hrms.personnel.entity.StaffCareerInfo;
 import com.hrms.personnel.entity.StaffCreateInfo;
 import com.hrms.personnel.entity.StaffDetailInfo;
 import com.hrms.personnel.utils.ContractUtils;
@@ -10,6 +12,9 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 
@@ -28,6 +33,9 @@ public class PersonnelService {
 
     @Autowired
     PersonnelDepartmentNumberDao personnelDepartmentNumberDao;
+
+    @Autowired
+    PersonnelDisableStaffDao personnelDisableStaffDao;
 
     @Autowired
     StaffUtils staffUtils;
@@ -69,5 +77,47 @@ public class PersonnelService {
         if (personnelStaffBaseInfoDao.updateStaffInfo(staffDetailInfo) != 1 || personnelStaffCareerInfoDao.updateStaffInfo(staffDetailInfo) != 1) {
             throw new Exception();
         }
+    }
+
+    @Transactional
+    public boolean staffTransfer(StaffCareerInfo staffCareerInfo) throws Exception {
+        int role = 1;
+        if (staffCareerInfo.getDepartmentId().equals("01001")) {
+            role = 3;
+        }
+        if (staffCareerInfo.getGrade() == 1) {
+            role += 1;
+        }
+        if (personnelStaffCareerInfoDao.staffTransfer(staffCareerInfo) == 1) {
+            if (personnelLoginInfoDao.updateRoles(staffCareerInfo.getStaffId(), role)) {
+                return true;
+            } else throw new Exception();
+        } else return false;
+
+    }
+
+    @Transactional
+    public boolean dismissStaff(DisableStaff disableStaff) {
+        //TODO:到期设置员工离职
+        if (personnelStaffCareerInfoDao.checkInfo(disableStaff.getStaffId(), disableStaff.getName())) {
+            personnelDisableStaffDao.addInfo(disableStaff);
+            return true;
+        } else return false;
+    }
+
+    public List<DisableStaff> getLeavingList() {
+        List<DisableStaff> disableStaffs = personnelDisableStaffDao.getLeavingList();
+        HashMap<String, DisableStaff> hashMap = new HashMap<>();
+        for (DisableStaff disableStaff : disableStaffs) {
+            hashMap.put(disableStaff.getStaffId(), disableStaff);
+        }
+        List<StaffCareerInfo> staffCareerInfos = personnelStaffCareerInfoDao.getLeavingList(hashMap.keySet());
+        DisableStaff disableStaff;
+        for (StaffCareerInfo staffCareerInfo : staffCareerInfos) {
+            disableStaff = hashMap.get(staffCareerInfo.getStaffId());
+            disableStaff.setName(staffCareerInfo.getName());
+            disableStaff.setDepartmentId(staffCareerInfo.getDepartmentId());
+        }
+        return disableStaffs;
     }
 }

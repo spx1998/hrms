@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import com.hrms.common.domain.CONTANTS;
 import com.hrms.common.domain.Msg;
 import com.hrms.personnel.entity.JobInfo;
+import com.hrms.personnel.entity.StaffCareerInfo;
 import com.hrms.sysmanage.dao.SysJobInfoDao;
 import com.hrms.sysmanage.dao.SysDepartmentDao;
 import com.hrms.sysmanage.dao.SysStaffCareerInfoDao;
@@ -218,4 +219,6 @@ public class SystemController {
         }
         return gson.toJson(msg);
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.hrms.common.Utils;
 
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.Period;
@@ -26,5 +27,13 @@ public class DateUtils {
         LocalDate oldLocalDate = new java.sql.Date(oldDate.getTime()).toLocalDate();
         Period period = Period.between(oldLocalDate, newLocalDate);
         return period.getMonths();
+    }
+
+    /**
+     * 格式化月份
+     */
+    public String getMonth(Date date) {
+        SimpleDateFormat s = new SimpleDateFormat("yyyyMM");
+        return s.format(date);
     }
 }
