@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.performance.dao.PerformAbsenceDao">
+
+    <resultMap type="com.hrms.performance.entity.Absence" id="AbsenceMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="staffId" column="staff_id" jdbcType="VARCHAR"/>
+        <result property="month" column="month" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="startDate" column="start_date" jdbcType="TIMESTAMP"/>
+        <result property="endDate" column="end_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <update id="updateLastDate">
+        update absence
+        set end_date=#{param2}
+        where staff_id = #{param1}
+          and end_date = #{param3};
+    </update>
+    <delete id="deleteAbsence">
+        delete
+        from absence
+        where staff_id = #{param1}
+          and end_date = #{param2};
+    </delete>
+    <select id="getAbsenceByStaffId" resultMap="AbsenceMap">
+        select *
+        from absence
+        where staff_id = #{staffId};
+    </select>
+
+</mapper>

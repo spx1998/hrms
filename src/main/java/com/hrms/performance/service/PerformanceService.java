@@ -1,18 +1,13 @@
 package com.hrms.performance.service;
 
 import com.hrms.common.Utils.DateUtils;
-import com.hrms.performance.dao.PerformPerformanceTableDao;
-import com.hrms.performance.dao.PerformStaffCareerInfoDao;
-import com.hrms.performance.entity.PerformanceStaffInfo;
-import com.hrms.performance.entity.PerformanceTable;
+import com.hrms.performance.dao.*;
+import com.hrms.performance.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PerformanceService {
@@ -21,6 +16,15 @@ public class PerformanceService {
 
     @Autowired
     PerformStaffCareerInfoDao performStaffCareerInfoDao;
+
+    @Autowired
+    PerformAbsenceDao performAbsenceDao;
+
+    @Autowired
+    PerformDepartmentDao performDepartmentDao;
+
+    @Autowired
+    PerformApplicationDao performApplicationDao;
 
     @Autowired
     DateUtils dateUtils;
@@ -50,5 +54,44 @@ public class PerformanceService {
         }
 
         return list;
+    }
+
+    @Transactional
+    public List<Date> getVacationList(String staffId) {
+        List<Date> dates = new ArrayList<>();
+        List<Absence> absences = performAbsenceDao.getAbsenceByStaffId(staffId);
+        for (Absence absence : absences) {
+            Calendar begin = Calendar.getInstance();
+            begin.setTime(absence.getStartDate());
+            while (absence.getEndDate().after(begin.getTime())) {
+                dates.add(begin.getTime());
+                begin.add(Calendar.DAY_OF_MONTH, 1);
+            }
+            dates.add(begin.getTime());
+        }
+        return dates;
+    }
+
+    @Transactional
+    public boolean vacationApplication(String staffId, Application application) {
+        application.setType(1);
+        StaffCareerInfo staffCareerInfo = performStaffCareerInfoDao.getStaffById(staffId);
+        String minister = performDepartmentDao.getMinisterId(staffCareerInfo.getDepartmentId());
+        performApplicationDao.createVacationApplication(staffId, minister, application);
+        return true;
+    }
+
+    @Transactional
+    public boolean cancelLeaving(String staffId, Date newDate, Date lastDate) {
+        //TODO: 跨月的情况
+        if (newDate.getMonth() == lastDate.getMonth()) {
+            performAbsenceDao.updateLastDate(staffId, newDate, lastDate);
+        } else {
+            Date lastDateOfMonth = dateUtils.getLastDay(newDate);
+            performAbsenceDao.deleteAbsence(staffId, lastDate);
+            performAbsenceDao.updateLastDate(staffId, newDate, lastDateOfMonth);
+
+        }
+        return true;
     }
 }

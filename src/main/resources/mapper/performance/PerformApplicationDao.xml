@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.performance.dao.PerformApplicationDao">
+
+    <resultMap type="com.hrms.performance.entity.Application" id="ApplicationMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="applicantId" column="applicant_id" jdbcType="VARCHAR"/>
+        <result property="approverId" column="approver_id" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="reason" column="reason" jdbcType="VARCHAR"/>
+        <result property="startDate" column="start_date" jdbcType="TIMESTAMP"/>
+        <result property="endDate" column="end_date" jdbcType="TIMESTAMP"/>
+        <result property="copy" column="copy" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="step" column="step" jdbcType="INTEGER"/>
+    </resultMap>
+    <insert id="createVacationApplication">
+        insert into application(applicant_id, approver_id, type, reason, start_date, end_date, copy, content)
+        values (#{staffId}, #{ministerId}, #{application.type}, #{application.reason}, #{application.startDate},
+                #{application.endDate}, #{application.copy}, #{application.content});
+    </insert>
+
+</mapper>

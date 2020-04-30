@@ -111,6 +111,7 @@ public class PersonnelService {
         for (DisableStaff disableStaff : disableStaffs) {
             hashMap.put(disableStaff.getStaffId(), disableStaff);
         }
+        if (hashMap.isEmpty()) return disableStaffs;
         List<StaffCareerInfo> staffCareerInfos = personnelStaffCareerInfoDao.getLeavingList(hashMap.keySet());
         DisableStaff disableStaff;
         for (StaffCareerInfo staffCareerInfo : staffCareerInfos) {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.message.dao.MessageApplicationStepDao">
+
+    <resultMap type="com.hrms.message.entity.ApplicationStep" id="ApplicationStepMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="step" column="step" jdbcType="INTEGER"/>
+        <result property="nextStep" column="next_step" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="getNextStep" resultType="java.lang.Integer">
+        select next_step
+        from application_step
+        where type = #{param1}
+          and step = #{param2};
+    </select>
+
+
+</mapper>

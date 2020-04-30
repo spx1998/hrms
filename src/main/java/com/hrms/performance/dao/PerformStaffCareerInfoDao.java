@@ -1,6 +1,7 @@
 package com.hrms.performance.dao;
 
 import com.hrms.performance.entity.PerformanceStaffInfo;
+import com.hrms.performance.entity.StaffCareerInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,6 @@ import java.util.List;
 public interface PerformStaffCareerInfoDao {
 
     List<PerformanceStaffInfo> getColleagueByStaffId(String staffId);
+
+    StaffCareerInfo getStaffById(String staffId);
 }

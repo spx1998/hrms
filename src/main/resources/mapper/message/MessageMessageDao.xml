@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.message.dao.MessageMessageDao">
+
+    <resultMap type="com.hrms.message.entity.Message" id="MessageMap">
+        <result property="messageId" column="message_id" jdbcType="INTEGER"/>
+        <result property="receiver" column="receiver" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="createMessage">
+        insert into message (receiver, content)
+        VALUES (#{param1}, #{param2});
+    </insert>
+    <update id="readMessage">
+        update message
+        set status='read'
+        where message_id = #{messageId};
+    </update>
+    <select id="getUnreadList" resultMap="MessageMap">
+        select *
+        from message
+        where receiver = #{staffId}
+          and status = 'unread';
+    </select>
+    <select id="getMessageList" resultMap="MessageMap">
+        select *
+        from message
+        where receiver = #{staffId};
+    </select>
+
+</mapper>

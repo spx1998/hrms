@@ -3,6 +3,7 @@ package com.hrms.common.Utils;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.Period;
@@ -35,5 +36,21 @@ public class DateUtils {
     public String getMonth(Date date) {
         SimpleDateFormat s = new SimpleDateFormat("yyyyMM");
         return s.format(date);
+    }
+
+    /**
+     * 获取某月的最后一天
+     */
+    public static void main(String[] args) {
+        new DateUtils().getLastDay(new Date());
+    }
+
+    public Date getLastDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, 1);  //加一个月
+        calendar.set(Calendar.DATE, 1);//设置为该月第一天
+        calendar.add(Calendar.DATE, -1); //再减一天即为上个月最后一天
+        return calendar.getTime();
     }
 }
